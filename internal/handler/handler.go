@@ -11,11 +11,11 @@ import (
 	"net/http"
 	"net/mail"
 
-	"estudo-diario/internal/ai"
-	"estudo-diario/internal/auth"
-	"estudo-diario/internal/model"
-	"estudo-diario/internal/repository"
-	"estudo-diario/internal/study"
+	"github.com/PatrikMaltacm/estudo-diario/internal/ai"
+	"github.com/PatrikMaltacm/estudo-diario/internal/auth"
+	"github.com/PatrikMaltacm/estudo-diario/internal/model"
+	"github.com/PatrikMaltacm/estudo-diario/internal/repository"
+	"github.com/PatrikMaltacm/estudo-diario/internal/study"
 
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"

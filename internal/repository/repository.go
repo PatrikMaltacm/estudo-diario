@@ -3,7 +3,7 @@ package repository
 import (
 	"database/sql"
 
-	"estudo-diario/internal/model"
+	"github.com/PatrikMaltacm/estudo-diario/internal/model"
 
 	"golang.org/x/crypto/bcrypt"
 )

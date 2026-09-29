@@ -1,4 +1,4 @@
-module estudo-diario
+module github.com/PatrikMaltacm/estudo-diario
 
 go 1.27.1
 

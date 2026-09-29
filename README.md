@@ -72,3 +72,7 @@ O serviço iniciará na porta padrão `8080`. Acesse `http://localhost:8080` pel
 Como o código fonte é de conhecimento público, confiamos estritamente na comunidade. O uso da plataforma trata de avaliar a própria capacidade mental para compreender e discorrer sobre um contexto desconhecido em um período espremido de tempo. 
 
 Gerar o resumo por intermédio de Inteligência Artificial somente para computar os pontos no placar público ofende, fundamentalmente, o próprio progresso individual de aprendizado.
+
+## Licença
+
+Este projeto é distribuído sob a [Licença MIT](LICENSE). Sinta-se livre para usar, modificar e distribuir o código conforme os termos da licença.

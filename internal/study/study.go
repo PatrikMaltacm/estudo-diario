@@ -11,7 +11,7 @@ import (
 	"time"
 	_ "time/tzdata" // embute os fusos horários no binário (não depende do SO)
 
-	"estudo-diario/internal/model"
+	"github.com/PatrikMaltacm/estudo-diario/internal/model"
 )
 
 const (

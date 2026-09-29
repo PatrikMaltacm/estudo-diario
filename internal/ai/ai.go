@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"os"
 
-	"estudo-diario/internal/model"
+	"github.com/PatrikMaltacm/estudo-diario/internal/model"
 )
 
 // EvaluateSummary envia o tópico e o resumo do aluno para a OpenAI e

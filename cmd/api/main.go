@@ -7,10 +7,10 @@ import (
 	"net/http"
 	"os"
 
-	"estudo-diario/internal/auth"
-	"estudo-diario/internal/handler"
-	"estudo-diario/internal/middleware"
-	webstatic "estudo-diario/web"
+	"github.com/PatrikMaltacm/estudo-diario/internal/auth"
+	"github.com/PatrikMaltacm/estudo-diario/internal/handler"
+	"github.com/PatrikMaltacm/estudo-diario/internal/middleware"
+	webstatic "github.com/PatrikMaltacm/estudo-diario/web"
 
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"github.com/joho/godotenv"
