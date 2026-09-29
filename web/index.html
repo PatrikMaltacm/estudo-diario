@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estudo Diário</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 24px 16px;
+      line-height: 1.5;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    input,
+    textarea,
+    button {
+      font: inherit;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #8886;
+    }
+
+    textarea {
+      min-height: 180px;
+      resize: vertical;
+    }
+
+    button {
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: wait;
+    }
+
+    .link {
+      background: none;
+      border: none;
+      text-decoration: underline;
+      padding: 0;
+      font-weight: 400;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    .nav {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      font-size: 0.9rem;
+      border-bottom: 1px solid #8886;
+      padding-bottom: 12px;
+    }
+
+    .nav button {
+      background: none;
+      border: none;
+      padding: 0;
+      text-decoration: underline;
+      color: inherit;
+      font-weight: 400;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: .9rem;
+    }
+
+    .label {
+      margin: 16px 0 0;
+    }
+
+    .topic {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin: 4px 0 8px;
+    }
+
+    .timer {
+      font-size: 2.4rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 12px;
+    }
+
+    .error {
+      color: #d33;
+      min-height: 1.4em;
+    }
+
+    .box {
+      margin-top: 16px;
+      padding: 16px;
+      border: 1px solid #8886;
+      border-radius: 8px;
+    }
+
+    .score {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+    }
+    th, td {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 1px solid #8886;
+    }
+
+    footer {
+      margin-top: 48px;
+      padding-top: 16px;
+      border-top: 1px solid #8886;
+      font-size: 0.8rem;
+      text-align: center;
+      color: inherit;
+    }
+    footer p {
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Estudo Diário</h1>
+  
+  <!-- Navegação superior -->
+  <div class="nav" id="nav" hidden>
+    <button class="link" onclick="navigate('study')">Estudar</button>
+    <button class="link" onclick="navigate('ranking')">Ranking</button>
+    <button class="link" onclick="navigate('rules')">Regras</button>
+    <button class="link" onclick="navigate('privacy')">Privacidade</button>
+  </div>
+
+  <!-- Login / cadastro -->
+  <section id="auth" hidden>
+    <form id="authForm">
+      <input id="name" placeholder="Nome" autocomplete="name" hidden>
+      <input id="email" type="email" placeholder="E-mail" autocomplete="email" required>
+      <input id="password" type="password" placeholder="Senha" autocomplete="current-password" required>
+      <button id="authBtn">Entrar</button>
+      <p class="error" id="authError"></p>
+    </form>
+    <button class="link" id="toggleMode" type="button">Não tem conta? Criar conta</button>
+  </section>
+
+  <!-- Estudo do dia -->
+  <section id="study" hidden>
+    <div class="row">
+      <span>Um estudo por dia, 25 minutos.</span>
+      <button class="link" id="logout" type="button">Sair</button>
+    </div>
+
+    <!-- 1. não iniciado -->
+    <div class="box" id="startBox" hidden>
+      <p>Ao clicar em começar, sorteamos seu assunto e o relógio de <strong>25 minutos</strong> inicia.
+        Estude o tema e envie seu resumo antes do tempo acabar. Só há uma tentativa por dia.</p>
+      <button id="startBtn">Começar (25 min)</button>
+    </div>
+
+    <!-- assunto -->
+    <div id="topicBox" hidden>
+      <p class="label">Seu assunto para estudo de hoje é:</p>
+      <p class="topic" id="topic"></p>
+    </div>
+
+    <!-- 2. em andamento -->
+    <div class="timer" id="timer" hidden>25:00</div>
+    <form id="summaryForm" hidden>
+      <textarea id="summary" placeholder="Escreva seu resumo (100 a 2000 caracteres)"></textarea>
+      <div class="row"><span id="counter">0 / 2000</span></div>
+      <button id="sendBtn">Enviar resumo</button>
+    </form>
+
+    <!-- 3. tempo esgotado -->
+    <p class="box" id="expired" hidden>O tempo de 25 minutos acabou. Volte amanhã para um novo assunto!</p>
+
+    <!-- 4. enviado -->
+    <div class="box" id="done" hidden>
+      <div class="score"><span id="score"></span>/10</div>
+      <strong id="level"></strong>
+      <p id="feedback"></p>
+      <div id="missingBox" hidden>
+        <strong>Pontos que faltaram:</strong>
+        <ul id="missing"></ul>
+      </div>
+      <p>Volte amanhã para um novo assunto!</p>
+    </div>
+
+    <p class="error" id="studyError"></p>
+  </section>
+
+  <!-- Ranking -->
+  <section id="ranking" hidden>
+    <h2>Ranking</h2>
+    <p>Top 50 estudantes com mais pontos acumulados.</p>
+    <div id="rankingLoading">Carregando...</div>
+    <table id="rankingTable" hidden>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nome</th>
+          <th>Pontos</th>
+        </tr>
+      </thead>
+      <tbody id="rankingBody"></tbody>
+    </table>
+  </section>
+
+  <!-- Regras -->
+  <section id="rules" hidden>
+    <h2>Regras do Estudo Diário</h2>
+    <div class="box">
+      <p>Você tem <strong>uma sessão de estudo por dia</strong>.</p>
+      <ul>
+        <li>Um assunto aleatório da Wikipédia é sorteado para você.</li>
+        <li>O relógio de <strong>25 minutos</strong> começa a contar.</li>
+        <li>Use esse tempo para pesquisar e aprender.</li>
+        <li>Escreva um resumo com <strong>100 a 2.000 caracteres</strong> com suas próprias palavras.</li>
+        <li>Uma IA avalia seu resumo (0 a 10) e os pontos vão para o ranking.</li>
+      </ul>
+      <p><strong>Regras de conduta:</strong></p>
+      <ul>
+        <li>O resumo deve ser escrito <strong>por você</strong>.</li>
+        <li>Não copie e cole o material.</li>
+        <li>Não use IA para gerar o resumo.</li>
+        <li>Apenas uma tentativa por dia.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Privacidade -->
+  <section id="privacy" hidden>
+    <h2>Política de Privacidade</h2>
+    <div class="box">
+      <p>Coletamos o mínimo necessário para o serviço funcionar.</p>
+      <ul>
+        <li><strong>Nome:</strong> exibido no ranking.</li>
+        <li><strong>E-mail:</strong> usado para login (nunca exibido publicamente).</li>
+        <li><strong>Senha:</strong> salva como hash bcrypt.</li>
+        <li><strong>Resumos:</strong> usados para avaliação e histórico.</li>
+      </ul>
+      <p>Seus dados são enviados para a API da OpenAI com <code>store: false</code>, garantindo que não sejam usados para treino.</p>
+      <p>O token de acesso é salvo apenas no <code>localStorage</code> do seu navegador.</p>
+    </div>
+  </section>
+
+  <!-- Rodapé -->
+  <footer>
+    <p>⭐ Projeto Open Source e Gratuito</p>
+    <p>🤝 Confiamos na comunidade — trapacear é se enganar, não nos enganar. O uso de IA para gerar conteúdo é contra as regras do jogo.</p>
+    <p style="margin-top: 10px;">
+      <button class="link" onclick="navigate('rules')">Regras</button> | 
+      <button class="link" onclick="navigate('privacy')">Privacidade</button>
+    </p>
+  </footer>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const LEVELS = {
+      very_low: "Muito baixo", low: "Baixo", basic: "Básico",
+      good: "Bom", very_good: "Muito bom", excellent: "Excelente",
+    };
+    let registerMode = false;
+    let timerId = null;
+    let sending = false;
+    let rankingLoaded = false;
+
+    // ---------- API ----------
+    async function api(method, path, body, auth = false) {
+      const headers = {};
+      if (body !== undefined) headers["Content-Type"] = "application/json";
+      if (auth) headers.Authorization = "Bearer " + localStorage.getItem("token");
+
+      const res = await fetch(path, {
+        method, headers,
+        body: body === undefined ? undefined : JSON.stringify(body),
+      });
+
+      if (res.status === 401 && auth) {
+        logout("Sessão expirada. Entre novamente.");
+        throw new Error("Sessão expirada. Entre novamente.");
+      }
+      if (!res.ok) {
+        const e = new Error((await res.text()).trim() || "Erro " + res.status);
+        e.status = res.status;
+        throw e;
+      }
+      return res.json();
+    }
+
+    // ---------- Sessão ----------
+    function render() {
+      const logged = !!localStorage.getItem("token");
+      $("auth").hidden = logged;
+      $("nav").hidden = !logged;
+      
+      if (logged) {
+        navigate('study');
+      } else {
+        hideAllPages();
+        $("auth").hidden = false;
+      }
+    }
+
+    function logout(msg = "") {
+      localStorage.removeItem("token");
+      clearInterval(timerId);
+      $("authError").textContent = msg;
+      render();
+    }
+
+    // ---------- Navegação ----------
+    function hideAllPages() {
+      ["study", "ranking", "rules", "privacy", "auth"].forEach(id => {
+        if ($(id)) $(id).hidden = true;
+      });
+    }
+
+    function navigate(page) {
+      // Se não estiver logado, permite ver as páginas públicas, mas volta ao login se clicar em 'study' sem estar logado
+      const logged = !!localStorage.getItem("token");
+      if (page === 'study' && !logged) {
+        hideAllPages();
+        $("auth").hidden = false;
+        return;
+      }
+
+      hideAllPages();
+      $(page).hidden = false;
+      if (page === 'study') loadStudy();
+      if (page === 'ranking') loadRanking();
+      
+      window.scrollTo(0, 0);
+    }
+    window.navigate = navigate; // para o HTML chamar no onClick do footer
+
+    // ---------- Estado do estudo ----------
+    async function loadStudy() {
+      $("studyError").textContent = "";
+      try {
+        show(await api("GET", "/study/today", undefined, true));
+      } catch (err) {
+        $("studyError").textContent = err.message;
+      }
+    }
+
+    function show(st) {
+      clearInterval(timerId);
+      const s = st.status;
+
+      $("startBox").hidden = s !== "not_started";
+      $("topicBox").hidden = s === "not_started";
+      $("timer").hidden = s !== "in_progress";
+      $("summaryForm").hidden = s !== "in_progress";
+      $("expired").hidden = s !== "expired";
+      $("done").hidden = s !== "submitted";
+      $("topic").textContent = st.topic || "";
+
+      if (s === "in_progress") startCountdown(st.seconds_left || 0);
+      if (s === "submitted" && st.evaluation) showResult(st.evaluation);
+    }
+
+    // O relógio é só visual: quem valida o prazo é o servidor.
+    function startCountdown(seconds) {
+      const end = Date.now() + seconds * 1000;
+
+      const tick = () => {
+        const left = Math.max(0, Math.round((end - Date.now()) / 1000));
+        const mm = String(Math.floor(left / 60)).padStart(2, "0");
+        const ss = String(left % 60).padStart(2, "0");
+        $("timer").textContent = mm + ":" + ss;
+
+        if (left === 0 && !sending) show({ status: "expired", topic: $("topic").textContent });
+      };
+
+      tick();
+      timerId = setInterval(tick, 500);
+    }
+
+    function showResult(ev) {
+      $("score").textContent = ev.score;
+      $("level").textContent = LEVELS[ev.understanding_level] || ev.understanding_level;
+      $("feedback").textContent = ev.feedback;
+
+      $("missing").replaceChildren(...(ev.missing_points || []).map((p) => {
+        const li = document.createElement("li");
+        li.textContent = p;
+        return li;
+      }));
+      $("missingBox").hidden = !(ev.missing_points && ev.missing_points.length);
+    }
+
+    // ---------- Ranking ----------
+    async function loadRanking() {
+      if (rankingLoaded) return;
+      try {
+        const entries = await api("GET", "/ranking");
+        $("rankingLoading").hidden = true;
+        
+        const tbody = $("rankingBody");
+        tbody.replaceChildren(...entries.map(e => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `<td>${e.position}</td><td>${escHtml(e.name)}</td><td>${e.points}</td>`;
+          return tr;
+        }));
+        
+        $("rankingTable").hidden = false;
+        rankingLoaded = true;
+      } catch (err) {
+        $("rankingLoading").textContent = "Erro ao carregar ranking.";
+      }
+    }
+
+    function escHtml(s) {
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    // ---------- Começar ----------
+    $("startBtn").onclick = async () => {
+      $("studyError").textContent = "";
+      $("startBtn").disabled = true;
+      try {
+        show(await api("POST", "/study/start", {}, true));
+      } catch (err) {
+        $("studyError").textContent = err.message;
+      } finally {
+        $("startBtn").disabled = false;
+      }
+    };
+
+    // ---------- Resumo ----------
+    $("summary").oninput = () => {
+      $("counter").textContent = [...$("summary").value].length + " / 2000";
+    };
+
+    $("summaryForm").onsubmit = async (e) => {
+      e.preventDefault();
+      $("studyError").textContent = "";
+      sending = true;
+      $("sendBtn").disabled = true;
+      $("sendBtn").textContent = "Avaliando...";
+
+      try {
+        const ev = await api("POST", "/send-summary", { summary: $("summary").value.trim() }, true);
+        show({ status: "submitted", topic: $("topic").textContent, evaluation: ev });
+      } catch (err) {
+        $("studyError").textContent = err.message;
+        // 403 = prazo acabou, 409 = já enviado / não iniciado: sincroniza a tela
+        if (err.status === 403 || err.status === 409) {
+          const msg = err.message;
+          await loadStudy();
+          $("studyError").textContent = msg;
+        }
+      } finally {
+        sending = false;
+        $("sendBtn").disabled = false;
+        $("sendBtn").textContent = "Enviar resumo";
+      }
+    };
+
+    $("logout").onclick = () => logout();
+
+    // ---------- Login / cadastro ----------
+    $("toggleMode").onclick = () => {
+      registerMode = !registerMode;
+      $("name").hidden = !registerMode;
+      $("name").required = registerMode;
+      $("authBtn").textContent = registerMode ? "Criar conta" : "Entrar";
+      $("toggleMode").textContent = registerMode ? "Já tem conta? Entrar" : "Não tem conta? Criar conta";
+      $("authError").textContent = "";
+    };
+
+    $("authForm").onsubmit = async (e) => {
+      e.preventDefault();
+      $("authError").textContent = "";
+      $("authBtn").disabled = true;
+
+      const email = $("email").value.trim();
+      const password = $("password").value;
+
+      try {
+        if (registerMode) {
+          await api("POST", "/user", { name: $("name").value.trim(), email, password });
+        }
+        const data = await api("POST", "/login", { email, password });
+        localStorage.setItem("token", data.token);
+        $("password").value = "";
+        render();
+      } catch (err) {
+        $("authError").textContent = err.message;
+      } finally {
+        $("authBtn").disabled = false;
+      }
+    };
+
+    // ---------- Início ----------
+    render();
+  </script>
+</body>
+</html>
