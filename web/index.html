@@ -3,7 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Estudo Diário</title>
+  <title>Estudo Diário — aprenda algo novo em 25 minutos por dia</title>
+  <meta name="description" content="Crie o hábito de estudar todos os dias: descubra um tema novo, aprenda em 25 minutos e acompanhe sua evolução no ranking do Estudo Diário.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="canonical" href="https://estudodiario.online/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="Estudo Diário">
+  <meta property="og:title" content="Estudo Diário — aprenda algo novo em 25 minutos por dia">
+  <meta property="og:description" content="Um tema por dia, 25 minutos de foco e um resumo escrito por você. Desenvolva o hábito de aprender continuamente.">
+  <meta property="og:url" content="https://estudodiario.online/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Estudo Diário — aprenda algo novo em 25 minutos por dia">
+  <meta name="twitter:description" content="Um tema por dia, 25 minutos de foco e um resumo escrito por você.">
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Estudo Diário",
+      "url": "https://estudodiario.online/",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "inLanguage": "pt-BR",
+      "description": "Plataforma gratuita para criar o hábito de estudar diariamente com sessões de 25 minutos, temas novos e feedback sobre resumos."
+    }
+  </script>
   <style>
     :root {
       color-scheme: light dark;
@@ -149,15 +175,29 @@
   </style>
 </head>
 <body>
-  <h1>Estudo Diário</h1>
+  <header>
+    <h1>Estudo Diário</h1>
+  </header>
+
+  <main>
+    <section id="intro" aria-labelledby="intro-title">
+      <h2 id="intro-title">Aprenda algo novo todos os dias</h2>
+      <p>Transforme 25 minutos em um hábito de aprendizado. Receba um tema novo, pesquise e escreva um resumo com suas próprias palavras.</p>
+      <ul>
+        <li>Um assunto diferente para explorar a cada dia.</li>
+        <li>Uma sessão focada de 25 minutos.</li>
+        <li>Feedback sobre seu resumo e um ranking para acompanhar sua evolução e competir com outros estudantes.</li>
+      </ul>
+      <p><strong>Gratuito e de código aberto.</strong> Faça o Login ou Crie sua conta para começar a estudar.</p>
+    </section>
   
   <!-- Navegação superior -->
-  <div class="nav" id="nav" hidden>
+  <nav class="nav" id="nav" aria-label="Navegação principal" hidden>
     <button class="link" onclick="navigate('study')">Estudar</button>
     <button class="link" onclick="navigate('ranking')">Ranking</button>
     <button class="link" onclick="navigate('rules')">Regras</button>
     <button class="link" onclick="navigate('privacy')">Privacidade</button>
-  </div>
+  </nav>
 
   <!-- Login / cadastro -->
   <section id="auth" hidden>
@@ -293,6 +333,7 @@
       <button class="link" onclick="navigate('privacy')">Privacidade</button>
     </p>
   </footer>
+  </main>
 
   <script>
     const $ = (id) => document.getElementById(id);
@@ -333,6 +374,7 @@
       const logged = !!localStorage.getItem("token");
       $("auth").hidden = logged;
       $("nav").hidden = !logged;
+      $("intro").hidden = logged;
       
       if (logged) {
         navigate('study');

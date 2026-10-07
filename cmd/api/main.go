@@ -56,6 +56,15 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
+	mux.HandleFunc("GET /robots.txt", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+		w.Header().Set("X-Robots-Tag", "all")
+		w.Write([]byte("User-agent: *\nAllow: /\nSitemap: https://estudodiario.online/sitemap.xml\n"))
+	})
+	mux.HandleFunc("GET /sitemap.xml", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/xml; charset=utf-8")
+		w.Write([]byte("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"><url><loc>https://estudodiario.online/</loc></url></urlset>"))
+	})
 
 	// Rate limiter global (20 req/s, burst 40)
 	globalLimiter := middleware.RateLimiter(20, 40)
