@@ -30,6 +30,7 @@ type StudyStatus struct {
 	Topic       string          `json:"topic,omitempty"`
 	SecondsLeft int             `json:"seconds_left,omitempty"`
 	Evaluation  json.RawMessage `json:"evaluation,omitempty"`
+	Language    string          `json:"language,omitempty"`
 }
 
 // SummaryRequest é o payload do endpoint de envio de resumo.

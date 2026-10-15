@@ -8,16 +8,19 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strings"
 
+	"github.com/PatrikMaltacm/estudo-diario/internal/i18n"
 	"github.com/PatrikMaltacm/estudo-diario/internal/model"
 )
 
 // EvaluateSummary envia o tópico e o resumo do aluno para a OpenAI e
-// retorna uma avaliação estruturada.
+// retorna uma avaliação estruturada no idioma solicitado.
 func EvaluateSummary(
 	ctx context.Context,
 	topic string,
 	summary string,
+	lang string,
 ) (*model.SummaryEvaluation, error) {
 
 	aiModel := os.Getenv("OPENAI_MODEL")
@@ -64,16 +67,8 @@ func EvaluateSummary(
 		"additionalProperties": false,
 	}
 
-	payload := map[string]any{
-		"model": aiModel,
-
-		"store": false,
-
-		"reasoning": map[string]any{
-			"effort": "low",
-		},
-
-		"instructions": `
+	aiLang := i18n.AILanguageName(lang)
+	instructions := fmt.Sprintf(`
 			You are an educational evaluator.
 
 			The student studied the given topic for a short period of time
@@ -102,21 +97,31 @@ func EvaluateSummary(
 
 			Do not require the student to mention every possible detail.
 
-			The feedback must be written in Brazilian Portuguese.
+			The feedback and each item in missing_points must be written in %s.
 
 			The feedback should be concise and useful.
 
 			Mention important concepts the student missed in missing_points.
 
 			Return only the requested JSON.
-			`,
+			`, aiLang)
 
-		"input": fmt.Sprintf(
-			"TEMA:\n%s\n\nRESUMO DO ALUNO:\n%s",
-			topic,
-			summary,
-		),
+	var promptInput string
+	switch i18n.MatchLocale(lang) {
+	case "en-US":
+		promptInput = fmt.Sprintf("TOPIC:\n%s\n\nSTUDENT'S SUMMARY:\n%s", topic, summary)
+	case "es-ES":
+		promptInput = fmt.Sprintf("TEMA:\n%s\n\nRESUMEN DEL ESTUDIANTE:\n%s", topic, summary)
+	default:
+		promptInput = fmt.Sprintf("TEMA:\n%s\n\nRESUMO DO ALUNO:\n%s", topic, summary)
+	}
 
+	payload := map[string]any{
+		"model":             aiModel,
+		"store":             false,
+		"instructions":      instructions,
+		"input":             promptInput,
+		"max_output_tokens": 2500,
 		"text": map[string]any{
 			"format": map[string]any{
 				"type":   "json_schema",
@@ -125,8 +130,18 @@ func EvaluateSummary(
 				"schema": schema,
 			},
 		},
+	}
 
-		"max_output_tokens": 2500,
+	// 'reasoning.effort' só é suportado por modelos de raciocínio (ex: o1, o3, gpt-5).
+	// Modelos como gpt-4o e gpt-4o-mini rejeitam esse parâmetro com erro 400.
+	if effort := os.Getenv("OPENAI_REASONING_EFFORT"); effort != "" {
+		payload["reasoning"] = map[string]any{
+			"effort": effort,
+		}
+	} else if strings.HasPrefix(aiModel, "o1") || strings.HasPrefix(aiModel, "o3") || strings.HasPrefix(aiModel, "gpt-5") {
+		payload["reasoning"] = map[string]any{
+			"effort": "low",
+		}
 	}
 
 	requestBody, err := json.Marshal(payload)

@@ -5,30 +5,145 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Estudo Diário — aprenda algo novo em 25 minutos por dia</title>
   <meta name="description" content="Crie o hábito de estudar todos os dias: descubra um tema novo, aprenda em 25 minutos e acompanhe sua evolução no ranking do Estudo Diário.">
-  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="keywords" content="estudo diario, pomodoro, aprender algo novo, habito de estudo, wikipedia, resumo com ia, autoaprendizado, daily study, study habit, open source education, ranking de estudos">
+  <meta name="author" content="Estudo Diário">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="theme-color" content="#ffffff">
+  <meta name="rating" content="general">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.ico">
+  <link rel="alternate icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+  <link rel="apple-touch-icon" href="/favicon.ico">
+
+  <!-- Canônico e Internacionalização hreflang -->
   <link rel="canonical" href="https://estudodiario.online/">
+  <link rel="alternate" hreflang="pt-BR" href="https://estudodiario.online/?lang=pt-BR">
+  <link rel="alternate" hreflang="en-US" href="https://estudodiario.online/?lang=en-US">
+  <link rel="alternate" hreflang="es-ES" href="https://estudodiario.online/?lang=es-ES">
+  <link rel="alternate" hreflang="x-default" href="https://estudodiario.online/">
+
+  <!-- Open Graph / Redes Sociais -->
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_BR">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:locale:alternate" content="es_ES">
   <meta property="og:site_name" content="Estudo Diário">
   <meta property="og:title" content="Estudo Diário — aprenda algo novo em 25 minutos por dia">
   <meta property="og:description" content="Um tema por dia, 25 minutos de foco e um resumo escrito por você. Desenvolva o hábito de aprender continuamente.">
   <meta property="og:url" content="https://estudodiario.online/">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://estudodiario.online/og-image.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/svg+xml">
+  <meta property="og:image:alt" content="Estudo Diário — Aprenda algo novo em 25 minutos por dia">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Estudo Diário — aprenda algo novo em 25 minutos por dia">
   <meta name="twitter:description" content="Um tema por dia, 25 minutos de foco e um resumo escrito por você.">
+  <meta name="twitter:image" content="https://estudodiario.online/og-image.svg">
+
   <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+
+  <!-- Dados Estruturados Schema.org (Google Rich Snippets) -->
   <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "Estudo Diário",
-      "url": "https://estudodiario.online/",
-      "applicationCategory": "EducationalApplication",
-      "operatingSystem": "Any",
-      "inLanguage": "pt-BR",
-      "description": "Plataforma gratuita para criar o hábito de estudar diariamente com sessões de 25 minutos, temas novos e feedback sobre resumos."
-    }
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Estudo Diário",
+        "alternateName": ["Daily Study", "Estudio Diario"],
+        "url": "https://estudodiario.online/",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Any",
+        "inLanguage": ["pt-BR", "en-US", "es-ES"],
+        "description": "Plataforma gratuita e de código aberto para criar o hábito diário de estudo com sessões de 25 minutos, temas aleatórios da Wikipédia e avaliação de resumos por IA.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "Sorteio aleatório de temas da Wikipédia em tempo real",
+          "Cronômetro Pomodoro de 25 minutos integrado",
+          "Avaliação qualitativa e nota de 0 a 10 gerada por IA",
+          "Ranking global competitivo entre estudantes",
+          "Interface multilíngue (Português, Inglês, Espanhol)"
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Como funciona o Estudo Diário?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Todos os dias um artigo aleatório da Wikipédia é sorteado. Você tem uma sessão de 25 minutos para pesquisar e aprender sobre o tema. Antes do tempo esgotar, escreva um resumo com suas próprias palavras de 100 a 2.000 caracteres para receber nota de 0 a 10 e feedback detalhado por Inteligência Artificial."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "O Estudo Diário é gratuito?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sim, a plataforma é 100% gratuita, sem anúncios e com código aberto disponível no GitHub."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Posso usar Inteligência Artificial para gerar o resumo?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Não. O uso de IA para gerar o resumo é estritamente contra as regras do jogo. A plataforma foi criada para desenvolver sua própria capacidade de leitura, síntese e aprendizado humano."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Quantas sessões de estudo posso fazer por dia?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Você tem direito a uma sessão de estudo por dia. Essa restrição existe propositalmente para construir consistência e transformar o estudo em um hábito diário."
+            }
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "Como criar o hábito de estudar diariamente com o Estudo Diário",
+        "description": "Passo a passo para realizar sua sessão diária de aprendizado e pontuar no ranking.",
+        "totalTime": "PT25M",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Iniciar o Estudo",
+            "text": "Clique no botão Começar para sortear um tema aleatório e disparar o cronômetro de 25 minutos."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Pesquisar e Aprender",
+            "text": "Use o tempo da sessão para pesquisar, ler e compreender os principais conceitos do tema sorteado."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Escrever o Resumo",
+            "text": "Escreva um resumo autoral de 100 a 2.000 caracteres explicando o que você aprendeu com suas próprias palavras."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "Receber a Avaliação",
+            "text": "Envie o resumo para receber feedback pedagógico instantâneo por IA e acumular pontos no ranking global."
+          }
+        ]
+      }
+    ]
   </script>
   <style>
     :root {
@@ -43,8 +158,38 @@
       line-height: 1.5;
     }
 
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
     h1 {
       font-size: 1.4rem;
+      margin: 0;
+    }
+
+    .lang-selector {
+      display: flex;
+      gap: 6px;
+    }
+
+    .lang-btn {
+      padding: 4px 8px;
+      font-size: 0.8rem;
+      border-radius: 6px;
+      border: 1px solid #8886;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .lang-btn.active {
+      font-weight: 700;
+      border-color: currentColor;
+      background: #8882;
     }
 
     form {
@@ -175,72 +320,77 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1>Estudo Diário</h1>
+  <header class="header">
+    <h1 data-i18n="header.title">Estudo Diário</h1>
+    <div class="lang-selector" aria-label="Idioma / Language">
+      <button type="button" class="lang-btn" data-lang="pt-BR" onclick="setLanguage('pt-BR')">🇧🇷 PT</button>
+      <button type="button" class="lang-btn" data-lang="en-US" onclick="setLanguage('en-US')">🇺🇸 EN</button>
+      <button type="button" class="lang-btn" data-lang="es-ES" onclick="setLanguage('es-ES')">🇪🇸 ES</button>
+    </div>
   </header>
 
   <main>
     <section id="intro" aria-labelledby="intro-title">
-      <h2 id="intro-title">Aprenda algo novo todos os dias</h2>
-      <p>Transforme 25 minutos em um hábito de aprendizado. Receba um tema novo, pesquise e escreva um resumo com suas próprias palavras.</p>
+      <h2 id="intro-title" data-i18n="intro.title">Aprenda algo novo todos os dias</h2>
+      <p data-i18n="intro.p1">Transforme 25 minutos em um hábito de aprendizado. Receba um tema novo, pesquise e escreva um resumo com suas próprias palavras.</p>
       <ul>
-        <li>Um assunto diferente para explorar a cada dia.</li>
-        <li>Uma sessão focada de 25 minutos.</li>
-        <li>Feedback sobre seu resumo e um ranking para acompanhar sua evolução e competir com outros estudantes.</li>
+        <li data-i18n="intro.li1">Um assunto diferente para explorar a cada dia.</li>
+        <li data-i18n="intro.li2">Uma sessão focada de 25 minutos.</li>
+        <li data-i18n="intro.li3">Feedback sobre seu resumo e um ranking para acompanhar sua evolução e competir com outros estudantes.</li>
       </ul>
-      <p><strong>Gratuito e de código aberto.</strong> Faça o Login ou Crie sua conta para começar a estudar.</p>
+      <p><strong data-i18n="intro.strong">Gratuito e de código aberto.</strong> <span data-i18n="intro.p2">Faça o Login ou Crie sua conta para começar a estudar.</span></p>
     </section>
   
   <!-- Navegação superior -->
   <nav class="nav" id="nav" aria-label="Navegação principal" hidden>
-    <button class="link" onclick="navigate('study')">Estudar</button>
-    <button class="link" onclick="navigate('ranking')">Ranking</button>
-    <button class="link" onclick="navigate('rules')">Regras</button>
-    <button class="link" onclick="navigate('privacy')">Privacidade</button>
+    <button class="link" onclick="navigate('study')" data-i18n="nav.study">Estudar</button>
+    <button class="link" onclick="navigate('ranking')" data-i18n="nav.ranking">Ranking</button>
+    <button class="link" onclick="navigate('rules')" data-i18n="nav.rules">Regras</button>
+    <button class="link" onclick="navigate('privacy')" data-i18n="nav.privacy">Privacidade</button>
   </nav>
 
   <!-- Login / cadastro -->
   <section id="auth" hidden>
     <form id="authForm">
-      <input id="name" placeholder="Nome" autocomplete="name" hidden>
-      <input id="email" type="email" placeholder="E-mail" autocomplete="email" required>
-      <input id="password" type="password" placeholder="Senha" autocomplete="current-password" required>
-      <button id="authBtn">Entrar</button>
+      <input id="name" placeholder="Nome" data-i18n-placeholder="auth.name_placeholder" autocomplete="name" hidden>
+      <input id="email" type="email" placeholder="E-mail" data-i18n-placeholder="auth.email_placeholder" autocomplete="email" required>
+      <input id="password" type="password" placeholder="Senha" data-i18n-placeholder="auth.password_placeholder" autocomplete="current-password" required>
+      <button id="authBtn" data-i18n="auth.btn_login">Entrar</button>
       <p class="error" id="authError"></p>
     </form>
-    <button class="link" id="toggleMode" type="button">Não tem conta? Criar conta</button>
+    <button class="link" id="toggleMode" type="button" data-i18n="auth.toggle_to_register">Não tem conta? Criar conta</button>
   </section>
 
   <!-- Estudo do dia -->
   <section id="study" hidden>
     <div class="row">
-      <span>Um estudo por dia, 25 minutos.</span>
-      <button class="link" id="logout" type="button">Sair</button>
+      <span data-i18n="study.header">Um estudo por dia, 25 minutos.</span>
+      <button class="link" id="logout" type="button" data-i18n="study.logout">Sair</button>
     </div>
 
     <!-- 1. não iniciado -->
     <div class="box" id="startBox" hidden>
-      <p>Ao clicar em começar, sorteamos seu assunto e o relógio de <strong>25 minutos</strong> inicia.
+      <p data-i18n="study.start_desc">Ao clicar em começar, sorteamos seu assunto e o relógio de <strong>25 minutos</strong> inicia.
         Estude o tema e envie seu resumo antes do tempo acabar. Só há uma tentativa por dia.</p>
-      <button id="startBtn">Começar (25 min)</button>
+      <button id="startBtn" data-i18n="study.start_btn">Começar (25 min)</button>
     </div>
 
     <!-- assunto -->
     <div id="topicBox" hidden>
-      <p class="label">Seu assunto para estudo de hoje é:</p>
+      <p class="label" data-i18n="study.topic_label">Seu assunto para estudo de hoje é:</p>
       <p class="topic" id="topic"></p>
     </div>
 
     <!-- 2. em andamento -->
     <div class="timer" id="timer" hidden>25:00</div>
     <form id="summaryForm" hidden>
-      <textarea id="summary" placeholder="Escreva seu resumo (100 a 2000 caracteres)"></textarea>
+      <textarea id="summary" placeholder="Escreva seu resumo (100 a 2000 caracteres)" data-i18n-placeholder="study.summary_placeholder"></textarea>
       <div class="row"><span id="counter">0 / 2000</span></div>
-      <button id="sendBtn">Enviar resumo</button>
+      <button id="sendBtn" data-i18n="study.send_btn">Enviar resumo</button>
     </form>
 
     <!-- 3. tempo esgotado -->
-    <p class="box" id="expired" hidden>O tempo de 25 minutos acabou. Volte amanhã para um novo assunto!</p>
+    <p class="box" id="expired" data-i18n="study.expired" hidden>O tempo de 25 minutos acabou. Volte amanhã para um novo assunto!</p>
 
     <!-- 4. enviado -->
     <div class="box" id="done" hidden>
@@ -248,10 +398,10 @@
       <strong id="level"></strong>
       <p id="feedback"></p>
       <div id="missingBox" hidden>
-        <strong>Pontos que faltaram:</strong>
+        <strong data-i18n="study.missing_title">Pontos que faltaram:</strong>
         <ul id="missing"></ul>
       </div>
-      <p>Volte amanhã para um novo assunto!</p>
+      <p data-i18n="study.come_back_tomorrow">Volte amanhã para um novo assunto!</p>
     </div>
 
     <p class="error" id="studyError"></p>
@@ -259,15 +409,15 @@
 
   <!-- Ranking -->
   <section id="ranking" hidden>
-    <h2>Ranking</h2>
-    <p>Top 50 estudantes com mais pontos acumulados.</p>
-    <div id="rankingLoading">Carregando...</div>
+    <h2 data-i18n="ranking.title">Ranking</h2>
+    <p data-i18n="ranking.desc">Top 50 estudantes com mais pontos acumulados.</p>
+    <div id="rankingLoading" data-i18n="ranking.loading">Carregando...</div>
     <table id="rankingTable" hidden>
       <thead>
         <tr>
           <th>#</th>
-          <th>Nome</th>
-          <th>Pontos</th>
+          <th data-i18n="ranking.th_name">Nome</th>
+          <th data-i18n="ranking.th_points">Pontos</th>
         </tr>
       </thead>
       <tbody id="rankingBody"></tbody>
@@ -276,39 +426,39 @@
 
   <!-- Regras -->
   <section id="rules" hidden>
-    <h2>Regras do Estudo Diário</h2>
+    <h2 data-i18n="rules.title">Regras do Estudo Diário</h2>
     <div class="box">
-      <p>Você tem <strong>uma sessão de estudo por dia</strong>.</p>
+      <p data-i18n="rules.box_p1">Você tem <strong>uma sessão de estudo por dia</strong>.</p>
       <ul>
-        <li>Um assunto aleatório da Wikipédia é sorteado para você.</li>
-        <li>O relógio de <strong>25 minutos</strong> começa a contar.</li>
-        <li>Use esse tempo para pesquisar e aprender.</li>
-        <li>Escreva um resumo com <strong>100 a 2.000 caracteres</strong> com suas próprias palavras.</li>
-        <li>Uma IA avalia seu resumo (0 a 10) e os pontos vão para o ranking.</li>
+        <li data-i18n="rules.li1">Um assunto aleatório da Wikipédia é sorteado para você.</li>
+        <li data-i18n="rules.li2">O relógio de <strong>25 minutos</strong> começa a contar.</li>
+        <li data-i18n="rules.li3">Use esse tempo para pesquisar e aprender.</li>
+        <li data-i18n="rules.li4">Escreva um resumo com <strong>100 a 2.000 caracteres</strong> com suas próprias palavras.</li>
+        <li data-i18n="rules.li5">Uma IA avalia seu resumo (0 a 10) e os pontos vão para o ranking.</li>
       </ul>
-      <p><strong>Regras de conduta:</strong></p>
+      <p><strong data-i18n="rules.conduct_title">Regras de conduta:</strong></p>
       <ul>
-        <li>O resumo deve ser escrito <strong>por você</strong>.</li>
-        <li>Não copie e cole o material.</li>
-        <li>Não use IA para gerar o resumo.</li>
-        <li>Apenas uma tentativa por dia.</li>
+        <li data-i18n="rules.conduct_li1">O resumo deve ser escrito <strong>por você</strong>.</li>
+        <li data-i18n="rules.conduct_li2">Não copie e cole o material.</li>
+        <li data-i18n="rules.conduct_li3">Não use IA para gerar o resumo.</li>
+        <li data-i18n="rules.conduct_li4">Apenas uma tentativa por dia.</li>
       </ul>
     </div>
   </section>
 
   <!-- Privacidade -->
   <section id="privacy" hidden>
-    <h2>Política de Privacidade</h2>
+    <h2 data-i18n="privacy.title">Política de Privacidade</h2>
     <div class="box">
-      <p>Coletamos o mínimo necessário para o serviço funcionar.</p>
+      <p data-i18n="privacy.box_p1">Coletamos o mínimo necessário para o serviço funcionar.</p>
       <ul>
-        <li><strong>Nome:</strong> exibido no ranking.</li>
-        <li><strong>E-mail:</strong> usado para login (nunca exibido publicamente).</li>
-        <li><strong>Senha:</strong> salva como hash bcrypt.</li>
-        <li><strong>Resumos:</strong> usados para avaliação e histórico.</li>
+        <li data-i18n="privacy.li1"><strong>Nome:</strong> exibido no ranking.</li>
+        <li data-i18n="privacy.li2"><strong>E-mail:</strong> usado para login (nunca exibido publicamente).</li>
+        <li data-i18n="privacy.li3"><strong>Senha:</strong> salva como hash bcrypt.</li>
+        <li data-i18n="privacy.li4"><strong>Resumos:</strong> usados para avaliação e histórico.</li>
       </ul>
-      <p>Seus dados são enviados para a API da OpenAI com <code>store: false</code>, garantindo que não sejam usados para treino.</p>
-      <p>O token de acesso é salvo apenas no <code>localStorage</code> do seu navegador.</p>
+      <p data-i18n="privacy.ai_notice">Seus dados são enviados para a API da OpenAI com <code>store: false</code>, garantindo que não sejam usados para treino.</p>
+      <p data-i18n="privacy.storage_notice">O token de acesso é salvo apenas no <code>localStorage</code> do seu navegador.</p>
     </div>
   </section>
 
@@ -318,37 +468,331 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-bottom: 3px; margin-right: 4px;">
         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
       </svg>
-      <a href="https://github.com/PatrikMaltacm/estudo-diario" target="_blank" rel="noopener noreferrer" style="color: inherit;">Projeto Open Source</a> e Gratuito
+      <a href="https://github.com/PatrikMaltacm/estudo-diario" target="_blank" rel="noopener noreferrer" style="color: inherit;" data-i18n="footer.open_source">Projeto Open Source e Gratuito</a>
     </p>
     <p>
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-bottom: 3px; margin-right: 4px;">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
       </svg>
-      Confiamos na comunidade — trapacear é se enganar, não nos enganar. O uso de IA para gerar conteúdo é contra as regras do jogo.
+      <span data-i18n="footer.trust">Confiamos na comunidade — trapacear é se enganar, não nos enganar. O uso de IA para gerar conteúdo é contra as regras do jogo.</span>
     </p>
     <p style="margin-top: 10px;">
-      <button class="link" onclick="navigate('study')">Início</button> | 
-      <button class="link" onclick="navigate('ranking')">Ranking</button> | 
-      <button class="link" onclick="navigate('rules')">Regras</button> | 
-      <button class="link" onclick="navigate('privacy')">Privacidade</button>
+      <button class="link" onclick="navigate('study')" data-i18n="nav.home">Início</button> | 
+      <button class="link" onclick="navigate('ranking')" data-i18n="nav.ranking">Ranking</button> | 
+      <button class="link" onclick="navigate('rules')" data-i18n="nav.rules">Regras</button> | 
+      <button class="link" onclick="navigate('privacy')" data-i18n="nav.privacy">Privacidade</button>
     </p>
   </footer>
   </main>
 
   <script>
     const $ = (id) => document.getElementById(id);
-    const LEVELS = {
-      very_low: "Muito baixo", low: "Baixo", basic: "Básico",
-      good: "Bom", very_good: "Muito bom", excellent: "Excelente",
+
+    // ---------- Dicionários de Tradução (i18n) ----------
+    const TRANSLATIONS = {
+      "pt-BR": {
+        "header.title": "Estudo Diário",
+        "intro.title": "Aprenda algo novo todos os dias",
+        "intro.p1": "Transforme 25 minutos em um hábito de aprendizado. Receba um tema novo, pesquise e escreva um resumo com suas próprias palavras.",
+        "intro.li1": "Um assunto diferente para explorar a cada dia.",
+        "intro.li2": "Uma sessão focada de 25 minutos.",
+        "intro.li3": "Feedback sobre seu resumo e um ranking para acompanhar sua evolução e competir com outros estudantes.",
+        "intro.strong": "Gratuito e de código aberto.",
+        "intro.p2": "Faça o Login ou Crie sua conta para começar a estudar.",
+        "nav.study": "Estudar",
+        "nav.ranking": "Ranking",
+        "nav.rules": "Regras",
+        "nav.privacy": "Privacidade",
+        "nav.home": "Início",
+        "auth.name_placeholder": "Nome",
+        "auth.email_placeholder": "E-mail",
+        "auth.password_placeholder": "Senha",
+        "auth.btn_login": "Entrar",
+        "auth.btn_register": "Criar conta",
+        "auth.toggle_to_register": "Não tem conta? Criar conta",
+        "auth.toggle_to_login": "Já tem conta? Entrar",
+        "study.header": "Um estudo por dia, 25 minutos.",
+        "study.logout": "Sair",
+        "study.start_desc": "Ao clicar em começar, sorteamos seu assunto e o relógio de 25 minutos inicia. Estude o tema e envie seu resumo antes do tempo acabar. Só há uma tentativa por dia.",
+        "study.start_btn": "Começar (25 min)",
+        "study.topic_label": "Seu assunto para estudo de hoje é:",
+        "study.summary_placeholder": "Escreva seu resumo (100 a 2000 caracteres)",
+        "study.send_btn": "Enviar resumo",
+        "study.sending_btn": "Avaliando...",
+        "study.expired": "O tempo de 25 minutos acabou. Volte amanhã para um novo assunto!",
+        "study.missing_title": "Pontos que faltaram:",
+        "study.come_back_tomorrow": "Volte amanhã para um novo assunto!",
+        "study.session_expired": "Sessão expirada. Entre novamente.",
+        "ranking.title": "Ranking",
+        "ranking.desc": "Top 50 estudantes com mais pontos acumulados.",
+        "ranking.loading": "Carregando...",
+        "ranking.th_name": "Nome",
+        "ranking.th_points": "Pontos",
+        "ranking.error": "Erro ao carregar ranking.",
+        "rules.title": "Regras do Estudo Diário",
+        "rules.box_p1": "Você tem <strong>uma sessão de estudo por dia</strong>.",
+        "rules.li1": "Um assunto aleatório da Wikipédia é sorteado para você.",
+        "rules.li2": "O relógio de <strong>25 minutos</strong> começa a contar.",
+        "rules.li3": "Use esse tempo para pesquisar e aprender.",
+        "rules.li4": "Escreva um resumo com <strong>100 a 2.000 caracteres</strong> com suas próprias palavras.",
+        "rules.li5": "Uma IA avalia seu resumo (0 a 10) e os pontos vão para o ranking.",
+        "rules.conduct_title": "Regras de conduta:",
+        "rules.conduct_li1": "O resumo deve ser escrito <strong>por você</strong>.",
+        "rules.conduct_li2": "Não copie e cole o material.",
+        "rules.conduct_li3": "Não use IA para gerar o resumo.",
+        "rules.conduct_li4": "Apenas uma tentativa por dia.",
+        "privacy.title": "Política de Privacidade",
+        "privacy.box_p1": "Coletamos o mínimo necessário para o serviço funcionar.",
+        "privacy.li1": "<strong>Nome:</strong> exibido no ranking.",
+        "privacy.li2": "<strong>E-mail:</strong> usado para login (nunca exibido publicamente).",
+        "privacy.li3": "<strong>Senha:</strong> salva como hash bcrypt.",
+        "privacy.li4": "<strong>Resumos:</strong> usados para avaliação e histórico.",
+        "privacy.ai_notice": "Seus dados são enviados para a API da OpenAI com <code>store: false</code>, garantindo que não sejam usados para treino.",
+        "privacy.storage_notice": "O token de acesso é salvo apenas no <code>localStorage</code> do seu navegador.",
+        "footer.open_source": "Projeto Open Source e Gratuito",
+        "footer.trust": "Confiamos na comunidade — trapacear é se enganar, não nos enganar. O uso de IA para gerar conteúdo é contra as regras do jogo.",
+        "levels": {
+          very_low: "Muito baixo", low: "Baixo", basic: "Básico",
+          good: "Bom", very_good: "Muito bom", excellent: "Excelente"
+        }
+      },
+      "en-US": {
+        "header.title": "Daily Study",
+        "intro.title": "Learn something new every day",
+        "intro.p1": "Turn 25 minutes into a lasting learning habit. Get a new topic, research it, and write a summary in your own words.",
+        "intro.li1": "A different topic to explore every single day.",
+        "intro.li2": "A focused 25-minute sprint.",
+        "intro.li3": "AI feedback on your summary and a global leaderboard to track your progress and compete with peers.",
+        "intro.strong": "Free and Open Source.",
+        "intro.p2": "Log in or Create an account to begin studying.",
+        "nav.study": "Study",
+        "nav.ranking": "Leaderboard",
+        "nav.rules": "Rules",
+        "nav.privacy": "Privacy",
+        "nav.home": "Home",
+        "auth.name_placeholder": "Name",
+        "auth.email_placeholder": "Email",
+        "auth.password_placeholder": "Password",
+        "auth.btn_login": "Sign In",
+        "auth.btn_register": "Create account",
+        "auth.toggle_to_register": "Don't have an account? Sign up",
+        "auth.toggle_to_login": "Already have an account? Sign In",
+        "study.header": "One study session a day, 25 minutes.",
+        "study.logout": "Log out",
+        "study.start_desc": "When you click start, we draw your topic and the 25-minute countdown begins. Study the subject and submit your summary before time runs out. Only one attempt per day.",
+        "study.start_btn": "Start (25 min)",
+        "study.topic_label": "Your study topic for today is:",
+        "study.summary_placeholder": "Write your summary (100 to 2,000 characters)",
+        "study.send_btn": "Submit summary",
+        "study.sending_btn": "Evaluating...",
+        "study.expired": "The 25-minute study time has expired. Come back tomorrow for a new topic!",
+        "study.missing_title": "Points that were missed:",
+        "study.come_back_tomorrow": "Come back tomorrow for a new topic!",
+        "study.session_expired": "Session expired. Please sign in again.",
+        "ranking.title": "Leaderboard",
+        "ranking.desc": "Top 50 learners with the most accumulated points.",
+        "ranking.loading": "Loading...",
+        "ranking.th_name": "Name",
+        "ranking.th_points": "Points",
+        "ranking.error": "Error loading leaderboard.",
+        "rules.title": "Daily Study Rules",
+        "rules.box_p1": "You have <strong>one study session per day</strong>.",
+        "rules.li1": "A random Wikipedia article is selected for you.",
+        "rules.li2": "The <strong>25-minute</strong> countdown begins immediately.",
+        "rules.li3": "Use this time to read, research, and understand.",
+        "rules.li4": "Write a summary with <strong>100 to 2,000 characters</strong> in your own words.",
+        "rules.li5": "An AI grades your summary (0 to 10) and points are added to the leaderboard.",
+        "rules.conduct_title": "Code of conduct:",
+        "rules.conduct_li1": "The summary must be written <strong>by you</strong>.",
+        "rules.conduct_li2": "Do not copy and paste source text.",
+        "rules.conduct_li3": "Do not use AI to generate the summary.",
+        "rules.conduct_li4": "Only one attempt allowed per day.",
+        "privacy.title": "Privacy Policy",
+        "privacy.box_p1": "We collect only what is strictly necessary for the service to run.",
+        "privacy.li1": "<strong>Name:</strong> displayed on the public leaderboard.",
+        "privacy.li2": "<strong>Email:</strong> used for authentication (never publicly displayed).",
+        "privacy.li3": "<strong>Password:</strong> stored as a secure bcrypt hash.",
+        "privacy.li4": "<strong>Summaries:</strong> stored for AI grading and study history.",
+        "privacy.ai_notice": "Your submissions are sent to the OpenAI API with <code>store: false</code>, ensuring they are not used for AI training.",
+        "privacy.storage_notice": "Your access token is kept solely in your browser's <code>localStorage</code>.",
+        "footer.open_source": "Free & Open Source Project",
+        "footer.trust": "We trust the community — cheating is deceiving yourself, not us. Generating content with AI violates the rules of the game.",
+        "levels": {
+          very_low: "Very Low", low: "Low", basic: "Basic",
+          good: "Good", very_good: "Very Good", excellent: "Excellent"
+        }
+      },
+      "es-ES": {
+        "header.title": "Estudio Diario",
+        "intro.title": "Aprende algo nuevo todos los días",
+        "intro.p1": "Convierte 25 minutos en un hábito de aprendizaje. Recibe un tema nuevo, investiga y escribe un resumen con tus propias palabras.",
+        "intro.li1": "Un tema diferente para explorar cada día.",
+        "intro.li2": "Una sesión enfocada de 25 minutos.",
+        "intro.li3": "Feedback sobre tu resumen y una clasificación para seguir tu progreso y competir con otros estudiantes.",
+        "intro.strong": "Gratuito y de código abierto.",
+        "intro.p2": "Inicia sesión o Crea tu cuenta para comenzar a estudiar.",
+        "nav.study": "Estudiar",
+        "nav.ranking": "Clasificación",
+        "nav.rules": "Reglas",
+        "nav.privacy": "Privacidad",
+        "nav.home": "Inicio",
+        "auth.name_placeholder": "Nombre",
+        "auth.email_placeholder": "Correo electrónico",
+        "auth.password_placeholder": "Contraseña",
+        "auth.btn_login": "Iniciar sesión",
+        "auth.btn_register": "Crear cuenta",
+        "auth.toggle_to_register": "¿No tienes cuenta? Crear cuenta",
+        "auth.toggle_to_login": "¿Ya tienes cuenta? Iniciar sesión",
+        "study.header": "Un estudio por día, 25 minutos.",
+        "study.logout": "Cerrar sesión",
+        "study.start_desc": "Al hacer clic en comenzar, sorteamos tu tema y el reloj de 25 minutos empieza a correr. Estudia el tema y envía tu resumen antes de que termine el tiempo. Solo un intento por día.",
+        "study.start_btn": "Comenzar (25 min)",
+        "study.topic_label": "Tu tema de estudio para hoy es:",
+        "study.summary_placeholder": "Escribe tu resumen (100 a 2000 caracteres)",
+        "study.send_btn": "Enviar resumen",
+        "study.sending_btn": "Evaluando...",
+        "study.expired": "¡El tiempo de 25 minutos se ha agotado. Vuelve mañana para un nuevo tema!",
+        "study.missing_title": "Puntos que faltaron:",
+        "study.come_back_tomorrow": "¡Vuelve mañana para un nuevo tema!",
+        "study.session_expired": "Sesión expirada. Inicia sesión nuevamente.",
+        "ranking.title": "Clasificación",
+        "ranking.desc": "Top 50 estudiantes con más puntos acumulados.",
+        "ranking.loading": "Cargando...",
+        "ranking.th_name": "Nombre",
+        "ranking.th_points": "Puntos",
+        "ranking.error": "Error al cargar la clasificación.",
+        "rules.title": "Reglas del Estudio Diario",
+        "rules.box_p1": "Tienes <strong>una sesión de estudio por día</strong>.",
+        "rules.li1": "Se sortea un tema aleatorio de Wikipedia para ti.",
+        "rules.li2": "El reloj de <strong>25 minutos</strong> comienza a contar.",
+        "rules.li3": "Usa ese tiempo para investigar y aprender.",
+        "rules.li4": "Escribe un resumen de <strong>100 a 2.000 caracteres</strong> con tus propias palabras.",
+        "rules.li5": "Una IA evalúa tu resumen (0 a 10) y los puntos van a la clasificación.",
+        "rules.conduct_title": "Reglas de conducta:",
+        "rules.conduct_li1": "El resumen debe ser escrito <strong>por ti</strong>.",
+        "rules.conduct_li2": "No copies ni pegues material.",
+        "rules.conduct_li3": "No uses IA para generar el resumen.",
+        "rules.conduct_li4": "Solo un intento por día.",
+        "privacy.title": "Política de Privacidad",
+        "privacy.box_p1": "Recopilamos solo lo mínimo necesario para que el servicio funcione.",
+        "privacy.li1": "<strong>Nombre:</strong> mostrado en la clasificación pública.",
+        "privacy.li2": "<strong>Correo electrónico:</strong> usado para iniciar sesión (nunca público).",
+        "privacy.li3": "<strong>Contraseña:</strong> guardada como hash bcrypt.",
+        "privacy.li4": "<strong>Resúmenes:</strong> usados para evaluación e historial.",
+        "privacy.ai_notice": "Tus datos se envían a la API de OpenAI con <code>store: false</code>, garantizando que no se usen para entrenamiento.",
+        "privacy.storage_notice": "El token de acceso se guarda únicamente en el <code>localStorage</code> de tu navegador.",
+        "footer.open_source": "Proyecto Open Source y Gratuito",
+        "footer.trust": "Confiamos en la comunidad: hacer trampa es engañarse a uno mismo, no a nosotros. El uso de IA para generar contenido va contra las reglas del juego.",
+        "levels": {
+          very_low: "Muy bajo", low: "Bajo", basic: "Básico",
+          good: "Bueno", very_good: "Muy bueno", excellent: "Excelente"
+        }
+      }
     };
+
+    // Metadados dinâmicos de SEO por idioma
+    const SEO_METAS = {
+      "pt-BR": {
+        title: "Estudo Diário — aprenda algo novo em 25 minutos por dia",
+        description: "Crie o hábito de estudar todos os dias: descubra um tema novo, aprenda em 25 minutos e acompanhe sua evolução no ranking do Estudo Diário."
+      },
+      "en-US": {
+        title: "Daily Study — learn something new in 25 minutes a day",
+        description: "Build a lasting daily study habit: discover a new topic, learn in 25 minutes, and track your growth on the global leaderboard."
+      },
+      "es-ES": {
+        title: "Estudio Diario — aprende algo nuevo en 25 minutos al día",
+        description: "Crea el hábito de estudiar todos los días: descubre un tema nuevo, aprende en 25 minutos y sigue tu evolución en la clasificación."
+      }
+    };
+
+    // Detecção inicial do idioma (prioridade: URL ?lang= -> localStorage -> navegador)
+    function detectInitialLocale() {
+      const params = new URLSearchParams(window.location.search);
+      const qLang = (params.get("lang") || params.get("locale") || "").toLowerCase();
+      if (qLang.startsWith("en")) return "en-US";
+      if (qLang.startsWith("es")) return "es-ES";
+      if (qLang.startsWith("pt")) return "pt-BR";
+
+      const saved = localStorage.getItem("lang");
+      if (saved && TRANSLATIONS[saved]) return saved;
+
+      const nav = (navigator.language || navigator.userLanguage || "").toLowerCase();
+      if (nav.startsWith("es")) return "es-ES";
+      if (nav.startsWith("en")) return "en-US";
+      return "pt-BR";
+    }
+
+    let currentLang = detectInitialLocale();
     let registerMode = false;
     let timerId = null;
     let sending = false;
     let rankingLoaded = false;
 
+    function t(key) {
+      const dict = TRANSLATIONS[currentLang] || TRANSLATIONS["pt-BR"];
+      return dict[key] || TRANSLATIONS["pt-BR"][key] || key;
+    }
+
+    function setLanguage(lang) {
+      if (!TRANSLATIONS[lang]) lang = "pt-BR";
+      currentLang = lang;
+      localStorage.setItem("lang", lang);
+      document.documentElement.lang = lang;
+
+      // Atualiza metadados dinâmicos de SEO no head
+      const meta = SEO_METAS[lang] || SEO_METAS["pt-BR"];
+      document.title = meta.title;
+      const descEl = document.querySelector('meta[name="description"]');
+      if (descEl) descEl.content = meta.description;
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) ogTitle.content = meta.title;
+      const ogDesc = document.querySelector('meta[property="og:description"]');
+      if (ogDesc) ogDesc.content = meta.description;
+      const twTitle = document.querySelector('meta[name="twitter:title"]');
+      if (twTitle) twTitle.content = meta.title;
+      const twDesc = document.querySelector('meta[name="twitter:description"]');
+      if (twDesc) twDesc.content = meta.description;
+
+      // Atualiza botões do seletor
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+      });
+
+      // Atualiza elementos declarativos data-i18n
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        const val = t(key);
+        if (val) {
+          if (val.includes("<") && val.includes(">")) {
+            el.innerHTML = val;
+          } else {
+            el.textContent = val;
+          }
+        }
+      });
+
+      // Atualiza placeholders declarativos data-i18n-placeholder
+      document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        const val = t(key);
+        if (val) el.placeholder = val;
+      });
+
+      // Atualiza textos dinâmicos do formulário de autenticação
+      $("authBtn").textContent = registerMode ? t("auth.btn_register") : t("auth.btn_login");
+      $("toggleMode").textContent = registerMode ? t("auth.toggle_to_login") : t("auth.toggle_to_register");
+
+      if (!sending) {
+        $("sendBtn").textContent = t("study.send_btn");
+      }
+    }
+
     // ---------- API ----------
     async function api(method, path, body, auth = false) {
-      const headers = {};
+      const headers = {
+        "Accept-Language": currentLang
+      };
       if (body !== undefined) headers["Content-Type"] = "application/json";
       if (auth) headers.Authorization = "Bearer " + localStorage.getItem("token");
 
@@ -358,8 +802,8 @@
       });
 
       if (res.status === 401 && auth) {
-        logout("Sessão expirada. Entre novamente.");
-        throw new Error("Sessão expirada. Entre novamente.");
+        logout(t("study.session_expired"));
+        throw new Error(t("study.session_expired"));
       }
       if (!res.ok) {
         const e = new Error((await res.text()).trim() || "Erro " + res.status);
@@ -376,7 +820,10 @@
       $("nav").hidden = !logged;
       $("intro").hidden = logged;
       
-      if (logged) {
+      const hash = (window.location.hash || "").replace("#", "");
+      if (["ranking", "rules", "privacy"].includes(hash)) {
+        navigate(hash);
+      } else if (logged) {
         navigate('study');
       } else {
         hideAllPages();
@@ -399,11 +846,11 @@
     }
 
     function navigate(page) {
-      // Se não estiver logado, permite ver as páginas públicas, mas volta ao login se clicar em 'study' sem estar logado
       const logged = !!localStorage.getItem("token");
       if (page === 'study' && !logged) {
         hideAllPages();
         $("auth").hidden = false;
+        history.replaceState(null, "", window.location.pathname + window.location.search);
         return;
       }
 
@@ -412,9 +859,11 @@
       if (page === 'study') loadStudy();
       if (page === 'ranking') loadRanking();
       
+      const hash = (page === 'study') ? "" : "#" + page;
+      history.replaceState(null, "", window.location.pathname + window.location.search + hash);
       window.scrollTo(0, 0);
     }
-    window.navigate = navigate; // para o HTML chamar no onClick do footer
+    window.navigate = navigate;
 
     // ---------- Estado do estudo ----------
     async function loadStudy() {
@@ -460,8 +909,11 @@
     }
 
     function showResult(ev) {
+      const dict = TRANSLATIONS[currentLang] || TRANSLATIONS["pt-BR"];
+      const levelMap = dict.levels || TRANSLATIONS["pt-BR"].levels;
+
       $("score").textContent = ev.score;
-      $("level").textContent = LEVELS[ev.understanding_level] || ev.understanding_level;
+      $("level").textContent = levelMap[ev.understanding_level] || ev.understanding_level;
       $("feedback").textContent = ev.feedback;
 
       $("missing").replaceChildren(...(ev.missing_points || []).map((p) => {
@@ -489,7 +941,7 @@
         $("rankingTable").hidden = false;
         rankingLoaded = true;
       } catch (err) {
-        $("rankingLoading").textContent = "Erro ao carregar ranking.";
+        $("rankingLoading").textContent = t("ranking.error");
       }
     }
 
@@ -520,7 +972,7 @@
       $("studyError").textContent = "";
       sending = true;
       $("sendBtn").disabled = true;
-      $("sendBtn").textContent = "Avaliando...";
+      $("sendBtn").textContent = t("study.sending_btn");
 
       try {
         const ev = await api("POST", "/send-summary", { summary: $("summary").value.trim() }, true);
@@ -536,7 +988,7 @@
       } finally {
         sending = false;
         $("sendBtn").disabled = false;
-        $("sendBtn").textContent = "Enviar resumo";
+        $("sendBtn").textContent = t("study.send_btn");
       }
     };
 
@@ -547,8 +999,8 @@
       registerMode = !registerMode;
       $("name").hidden = !registerMode;
       $("name").required = registerMode;
-      $("authBtn").textContent = registerMode ? "Criar conta" : "Entrar";
-      $("toggleMode").textContent = registerMode ? "Já tem conta? Entrar" : "Não tem conta? Criar conta";
+      $("authBtn").textContent = registerMode ? t("auth.btn_register") : t("auth.btn_login");
+      $("toggleMode").textContent = registerMode ? t("auth.toggle_to_login") : t("auth.toggle_to_register");
       $("authError").textContent = "";
     };
 
@@ -575,7 +1027,8 @@
       }
     };
 
-    // ---------- Início ----------
+    // ---------- Inicialização ----------
+    setLanguage(currentLang);
     render();
   </script>
 </body>

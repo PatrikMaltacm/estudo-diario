@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/PatrikMaltacm/estudo-diario/internal/i18n"
 	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -62,14 +63,14 @@ func RequireAuth(secret []byte, next http.HandlerFunc) http.HandlerFunc {
 		token, ok := strings.CutPrefix(r.Header.Get("Authorization"), "Bearer ")
 		if !ok || token == "" {
 			w.Header().Set("WWW-Authenticate", "Bearer")
-			http.Error(w, "Token de acesso ausente", http.StatusUnauthorized)
+			http.Error(w, i18n.T(r.Context(), "error.token_missing"), http.StatusUnauthorized)
 			return
 		}
 
 		userID, err := ParseToken(secret, token)
 		if err != nil {
 			w.Header().Set("WWW-Authenticate", "Bearer")
-			http.Error(w, "Token inválido ou expirado", http.StatusUnauthorized)
+			http.Error(w, i18n.T(r.Context(), "error.token_invalid"), http.StatusUnauthorized)
 			return
 		}
 

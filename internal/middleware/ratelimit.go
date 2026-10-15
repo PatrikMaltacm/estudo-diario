@@ -7,6 +7,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/PatrikMaltacm/estudo-diario/internal/i18n"
 	"golang.org/x/time/rate"
 )
 
@@ -60,7 +61,7 @@ func RateLimiter(r rate.Limit, b int) func(http.Handler) http.Handler {
 
 			if !clients[ip].limiter.Allow() {
 				mu.Unlock()
-				http.Error(w, "Muitas requisições. Tente novamente mais tarde.", http.StatusTooManyRequests)
+				http.Error(w, i18n.T(req.Context(), "error.rate_limit"), http.StatusTooManyRequests)
 				return
 			}
 			mu.Unlock()

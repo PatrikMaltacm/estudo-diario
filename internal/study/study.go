@@ -11,6 +11,7 @@ import (
 	"time"
 	_ "time/tzdata" // embute os fusos horários no binário (não depende do SO)
 
+	"github.com/PatrikMaltacm/estudo-diario/internal/i18n"
 	"github.com/PatrikMaltacm/estudo-diario/internal/model"
 )
 
@@ -34,10 +35,12 @@ func Today() string {
 	return time.Now().In(BrLoc).Format("2006-01-02")
 }
 
-// FetchRandomTopic busca um artigo aleatório na Wikipédia em português.
-func FetchRandomTopic(ctx context.Context) (string, error) {
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet,
-		"https://pt.wikipedia.org/api/rest_v1/page/random/summary", nil)
+// FetchRandomTopic busca um artigo aleatório na Wikipédia no idioma correspondente.
+func FetchRandomTopic(ctx context.Context, lang string) (string, error) {
+	wikiLang := i18n.WikiLanguage(lang)
+	url := fmt.Sprintf("https://%s.wikipedia.org/api/rest_v1/page/random/summary", wikiLang)
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		return "", err
 	}
@@ -50,7 +53,7 @@ func FetchRandomTopic(ctx context.Context) (string, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return "", fmt.Errorf("wikipédia retornou status %d", resp.StatusCode)
+		return "", fmt.Errorf("wikipédia (%s) retornou status %d", wikiLang, resp.StatusCode)
 	}
 
 	var s model.Subject
@@ -70,14 +73,15 @@ func GetStatus(ctx context.Context, db *sql.DB, userID string) (*model.StudyStat
 		startedAt   time.Time
 		submittedAt sql.NullTime
 		evaluation  []byte
+		sessionLang sql.NullString
 	)
 
 	err := db.QueryRowContext(ctx,
-		`SELECT topic, started_at, submitted_at, evaluation
+		`SELECT topic, started_at, submitted_at, evaluation, COALESCE(language, 'pt-BR')
 		   FROM study_sessions
 		  WHERE user_id = $1 AND study_date = $2`,
 		userID, Today(),
-	).Scan(&topic, &startedAt, &submittedAt, &evaluation)
+	).Scan(&topic, &startedAt, &submittedAt, &evaluation, &sessionLang)
 
 	if errors.Is(err, sql.ErrNoRows) {
 		return &model.StudyStatus{Status: "not_started"}, nil
@@ -86,7 +90,10 @@ func GetStatus(ctx context.Context, db *sql.DB, userID string) (*model.StudyStat
 		return nil, err
 	}
 
-	st := &model.StudyStatus{Topic: topic}
+	st := &model.StudyStatus{
+		Topic:    topic,
+		Language: sessionLang.String,
+	}
 	left := time.Until(startedAt.Add(StudyDuration))
 
 	switch {
@@ -104,10 +111,11 @@ func GetStatus(ctx context.Context, db *sql.DB, userID string) (*model.StudyStat
 
 // ClaimSubmission "reserva" o envio de forma atômica: só funciona se a sessão
 // mais recente ainda não foi enviada e está dentro dos 25 min.
-// Isso impede envio duplo (inclusive requisições simultâneas) e envio fora do prazo.
-func ClaimSubmission(ctx context.Context, db *sql.DB, userID, summary string) (int64, string, error) {
+// Retorna o id da sessão, o tópico, o idioma gravado no início do estudo e erro.
+func ClaimSubmission(ctx context.Context, db *sql.DB, userID, summary string) (int64, string, string, error) {
 	var id int64
 	var topic string
+	var sessionLang string
 
 	err := db.QueryRowContext(ctx, `
 		UPDATE study_sessions
@@ -117,11 +125,11 @@ func ClaimSubmission(ctx context.Context, db *sql.DB, userID, summary string) (i
 		              ORDER BY started_at DESC LIMIT 1)
 		   AND submitted_at IS NULL
 		   AND now() <= started_at + make_interval(secs => $3)
-		RETURNING id, topic`,
+		RETURNING id, topic, COALESCE(language, 'pt-BR')`,
 		userID, summary, (StudyDuration+SubmitGrace).Seconds(),
-	).Scan(&id, &topic)
+	).Scan(&id, &topic, &sessionLang)
 
-	return id, topic, err
+	return id, topic, sessionLang, err
 }
 
 // ReleaseSubmission devolve a sessão ao estado "não enviada" se algo falhou

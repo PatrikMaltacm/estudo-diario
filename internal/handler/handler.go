@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"encoding/json"
-
 	"errors"
 	"io/fs"
 	"log"
@@ -13,6 +12,7 @@ import (
 
 	"github.com/PatrikMaltacm/estudo-diario/internal/ai"
 	"github.com/PatrikMaltacm/estudo-diario/internal/auth"
+	"github.com/PatrikMaltacm/estudo-diario/internal/i18n"
 	"github.com/PatrikMaltacm/estudo-diario/internal/model"
 	"github.com/PatrikMaltacm/estudo-diario/internal/repository"
 	"github.com/PatrikMaltacm/estudo-diario/internal/study"
@@ -46,7 +46,7 @@ func isValidEmail(email string) bool {
 func (app *Application) HomeHandler(w http.ResponseWriter, r *http.Request) {
 	data, err := fs.ReadFile(app.StaticFS, "index.html")
 	if err != nil {
-		http.Error(w, "Página não encontrada", http.StatusNotFound)
+		http.Error(w, i18n.T(r.Context(), "error.not_found"), http.StatusNotFound)
 		return
 	}
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
@@ -59,39 +59,39 @@ func (app *Application) CreateUserHandler(w http.ResponseWriter, r *http.Request
 
 	var user model.UserRequestDTO
 	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
-		http.Error(w, "Dados inválidos", http.StatusBadRequest)
+		http.Error(w, i18n.T(r.Context(), "error.invalid_data"), http.StatusBadRequest)
 		return
 	}
 
 	if user.Name == "" {
-		http.Error(w, "Nome não pode ser vazio", http.StatusBadRequest)
+		http.Error(w, i18n.T(r.Context(), "error.empty_name"), http.StatusBadRequest)
 		return
 	}
 
 	if user.Email == "" {
-		http.Error(w, "Email não pode ser vazio", http.StatusBadRequest)
+		http.Error(w, i18n.T(r.Context(), "error.empty_email"), http.StatusBadRequest)
 		return
 	}
 
 	if !isValidEmail(user.Email) {
-		http.Error(w, "Insira um email válido", http.StatusBadRequest)
+		http.Error(w, i18n.T(r.Context(), "error.invalid_email"), http.StatusBadRequest)
 		return
 	}
 
 	// o bcrypt só considera os primeiros 72 bytes da senha
 	if len(user.Password) < 8 || len(user.Password) > 72 {
-		http.Error(w, "A senha deve ter entre 8 e 72 caracteres", http.StatusBadRequest)
+		http.Error(w, i18n.T(r.Context(), "error.password_length"), http.StatusBadRequest)
 		return
 	}
 
 	exists, err := repository.UserExistsByEmail(user.Email, app.DB)
 	if err != nil {
 		log.Printf("Erro ao verificar e-mail: %v", err)
-		http.Error(w, "Erro interno", http.StatusInternalServerError)
+		http.Error(w, i18n.T(r.Context(), "error.internal"), http.StatusInternalServerError)
 		return
 	}
 	if exists {
-		http.Error(w, "Endereço de e-mail já está em uso", http.StatusConflict)
+		http.Error(w, i18n.T(r.Context(), "error.email_in_use"), http.StatusConflict)
 		return
 	}
 
@@ -100,14 +100,14 @@ func (app *Application) CreateUserHandler(w http.ResponseWriter, r *http.Request
 
 	if err := repository.InsertNewUser(&user, app.DB); err != nil {
 		log.Printf("Erro ao salvar usuário: %v", err)
-		http.Error(w, "Erro ao salvar usuário", http.StatusInternalServerError)
+		http.Error(w, i18n.T(r.Context(), "error.save_user"), http.StatusInternalServerError)
 		return
 	}
 
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(map[string]string{
-		"message": "Usuário criado com sucesso",
+		"message": i18n.T(r.Context(), "success.user_created"),
 	})
 }
 
@@ -117,34 +117,34 @@ func (app *Application) LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	var req model.LoginRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		http.Error(w, "Dados inválidos", http.StatusBadRequest)
+		http.Error(w, i18n.T(r.Context(), "error.invalid_data"), http.StatusBadRequest)
 		return
 	}
 
 	if req.Email == "" || req.Password == "" {
-		http.Error(w, "Email e senha são obrigatórios", http.StatusBadRequest)
+		http.Error(w, i18n.T(r.Context(), "error.email_password_required"), http.StatusBadRequest)
 		return
 	}
 
 	userID, hash, err := repository.GetCredentialsByEmail(req.Email, app.DB)
 	if errors.Is(err, sql.ErrNoRows) {
 		bcrypt.CompareHashAndPassword(auth.DummyHash, []byte(req.Password))
-		http.Error(w, "Credenciais inválidas", http.StatusUnauthorized)
+		http.Error(w, i18n.T(r.Context(), "error.invalid_credentials"), http.StatusUnauthorized)
 		return
 	}
 	if err != nil {
-		http.Error(w, "Erro interno", http.StatusInternalServerError)
+		http.Error(w, i18n.T(r.Context(), "error.internal"), http.StatusInternalServerError)
 		return
 	}
 
 	if err := bcrypt.CompareHashAndPassword(hash, []byte(req.Password)); err != nil {
-		http.Error(w, "Credenciais inválidas", http.StatusUnauthorized)
+		http.Error(w, i18n.T(r.Context(), "error.invalid_credentials"), http.StatusUnauthorized)
 		return
 	}
 
 	token, err := auth.GenerateToken(app.JWTSecret, userID)
 	if err != nil {
-		http.Error(w, "Erro ao gerar token", http.StatusInternalServerError)
+		http.Error(w, i18n.T(r.Context(), "error.token_generate"), http.StatusInternalServerError)
 		return
 	}
 
@@ -160,14 +160,14 @@ func (app *Application) LoginHandler(w http.ResponseWriter, r *http.Request) {
 func (app *Application) TodayStudyHandler(w http.ResponseWriter, r *http.Request) {
 	userID, ok := auth.UserIDFromContext(r.Context())
 	if !ok {
-		http.Error(w, "Não autenticado", http.StatusUnauthorized)
+		http.Error(w, i18n.T(r.Context(), "error.unauthorized"), http.StatusUnauthorized)
 		return
 	}
 
 	st, err := study.GetStatus(r.Context(), app.DB, userID)
 	if err != nil {
 		log.Printf("Erro ao buscar estudo de hoje: %v", err)
-		http.Error(w, "Erro interno", http.StatusInternalServerError)
+		http.Error(w, i18n.T(r.Context(), "error.internal"), http.StatusInternalServerError)
 		return
 	}
 	writeJSON(w, http.StatusOK, st)
@@ -178,41 +178,42 @@ func (app *Application) TodayStudyHandler(w http.ResponseWriter, r *http.Request
 func (app *Application) StartStudyHandler(w http.ResponseWriter, r *http.Request) {
 	userID, ok := auth.UserIDFromContext(r.Context())
 	if !ok {
-		http.Error(w, "Não autenticado", http.StatusUnauthorized)
+		http.Error(w, i18n.T(r.Context(), "error.unauthorized"), http.StatusUnauthorized)
 		return
 	}
 
 	st, err := study.GetStatus(r.Context(), app.DB, userID)
 	if err != nil {
 		log.Printf("Erro ao buscar estudo de hoje: %v", err)
-		http.Error(w, "Erro interno", http.StatusInternalServerError)
+		http.Error(w, i18n.T(r.Context(), "error.internal"), http.StatusInternalServerError)
 		return
 	}
 
 	if st.Status == "not_started" {
-		topic, err := study.FetchRandomTopic(r.Context())
+		lang := i18n.FromContext(r.Context())
+		topic, err := study.FetchRandomTopic(r.Context(), lang)
 		if err != nil {
 			log.Printf("Erro ao sortear assunto: %v", err)
-			http.Error(w, "Não foi possível sortear o assunto", http.StatusBadGateway)
+			http.Error(w, i18n.T(r.Context(), "error.topic_fetch"), http.StatusBadGateway)
 			return
 		}
 
 		_, err = app.DB.ExecContext(r.Context(),
-			`INSERT INTO study_sessions (user_id, study_date, topic)
-			 VALUES ($1, $2, $3)
+			`INSERT INTO study_sessions (user_id, study_date, topic, language)
+			 VALUES ($1, $2, $3, $4)
 			 ON CONFLICT (user_id, study_date) DO NOTHING`,
-			userID, study.Today(), topic,
+			userID, study.Today(), topic, lang,
 		)
 		if err != nil {
 			log.Printf("Erro ao criar sessão: %v", err)
-			http.Error(w, "Erro interno", http.StatusInternalServerError)
+			http.Error(w, i18n.T(r.Context(), "error.internal"), http.StatusInternalServerError)
 			return
 		}
 
 		// relê do banco: se duas abas iniciarem juntas, ambas veem a mesma sessão
 		st, err = study.GetStatus(r.Context(), app.DB, userID)
 		if err != nil {
-			http.Error(w, "Erro interno", http.StatusInternalServerError)
+			http.Error(w, i18n.T(r.Context(), "error.internal"), http.StatusInternalServerError)
 			return
 		}
 	}
@@ -224,7 +225,7 @@ func (app *Application) StartStudyHandler(w http.ResponseWriter, r *http.Request
 func (app *Application) SendSummaryHandler(w http.ResponseWriter, r *http.Request) {
 	userID, ok := auth.UserIDFromContext(r.Context())
 	if !ok {
-		http.Error(w, "Não autenticado", http.StatusUnauthorized)
+		http.Error(w, i18n.T(r.Context(), "error.unauthorized"), http.StatusUnauthorized)
 		return
 	}
 
@@ -234,28 +235,28 @@ func (app *Application) SendSummaryHandler(w http.ResponseWriter, r *http.Reques
 		Summary string `json:"summary"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		http.Error(w, "JSON inválido", http.StatusBadRequest)
+		http.Error(w, i18n.T(r.Context(), "error.invalid_json"), http.StatusBadRequest)
 		return
 	}
 
 	if n := len([]rune(req.Summary)); n < 100 || n > 2000 {
-		http.Error(w, "O resumo deve ter entre 100 e 2.000 caracteres", http.StatusBadRequest)
+		http.Error(w, i18n.T(r.Context(), "error.summary_length"), http.StatusBadRequest)
 		return
 	}
 
 	// 1. reserva o envio (valida prazo e duplicidade no próprio UPDATE)
-	sessionID, topic, err := study.ClaimSubmission(r.Context(), app.DB, userID, req.Summary)
+	sessionID, topic, sessionLang, err := study.ClaimSubmission(r.Context(), app.DB, userID, req.Summary)
 	if errors.Is(err, sql.ErrNoRows) {
-		msg, code := "Não foi possível enviar o resumo", http.StatusConflict
+		msg, code := i18n.T(r.Context(), "error.create_session"), http.StatusConflict
 
 		if st, stErr := study.GetStatus(r.Context(), app.DB, userID); stErr == nil {
 			switch st.Status {
 			case "not_started":
-				msg = "Comece o estudo de hoje antes de enviar o resumo"
+				msg = i18n.T(r.Context(), "error.start_study_first")
 			case "submitted":
-				msg = "Você já enviou o resumo de hoje. Volte amanhã!"
+				msg = i18n.T(r.Context(), "error.already_submitted")
 			case "expired":
-				msg, code = "O tempo de 25 minutos acabou. Tente de novo amanhã.", http.StatusForbidden
+				msg, code = i18n.T(r.Context(), "error.time_expired"), http.StatusForbidden
 			}
 		}
 		http.Error(w, msg, code)
@@ -263,19 +264,19 @@ func (app *Application) SendSummaryHandler(w http.ResponseWriter, r *http.Reques
 	}
 	if err != nil {
 		log.Printf("Erro ao reservar envio: %v", err)
-		http.Error(w, "Erro interno", http.StatusInternalServerError)
+		http.Error(w, i18n.T(r.Context(), "error.internal"), http.StatusInternalServerError)
 		return
 	}
 
 	// contexto que sobrevive se o cliente fechar a aba no meio da avaliação
 	ctx := context.WithoutCancel(r.Context())
 
-	// 2. avalia com a IA
-	evaluation, err := ai.EvaluateSummary(r.Context(), topic, req.Summary)
+	// 2. avalia com a IA no idioma registrado na sessão
+	evaluation, err := ai.EvaluateSummary(r.Context(), topic, req.Summary, sessionLang)
 	if err != nil {
 		log.Printf("Erro ao avaliar resumo: %v", err)
 		study.ReleaseSubmission(ctx, app.DB, sessionID)
-		http.Error(w, "Não foi possível avaliar o resumo. Tente novamente.", http.StatusInternalServerError)
+		http.Error(w, i18n.T(r.Context(), "error.evaluate_summary"), http.StatusInternalServerError)
 		return
 	}
 
@@ -283,7 +284,7 @@ func (app *Application) SendSummaryHandler(w http.ResponseWriter, r *http.Reques
 	if err := study.SaveEvaluation(ctx, app.DB, sessionID, userID, evaluation); err != nil {
 		log.Printf("Erro ao salvar avaliação: %v", err)
 		study.ReleaseSubmission(ctx, app.DB, sessionID)
-		http.Error(w, "Não foi possível salvar sua avaliação. Tente novamente.", http.StatusInternalServerError)
+		http.Error(w, i18n.T(r.Context(), "error.save_evaluation"), http.StatusInternalServerError)
 		return
 	}
 
@@ -304,7 +305,7 @@ func (app *Application) RankingHandler(w http.ResponseWriter, r *http.Request) {
 	)
 	if err != nil {
 		log.Printf("Erro ao buscar ranking: %v", err)
-		http.Error(w, "Erro interno", http.StatusInternalServerError)
+		http.Error(w, i18n.T(r.Context(), "error.internal"), http.StatusInternalServerError)
 		return
 	}
 	defer rows.Close()
