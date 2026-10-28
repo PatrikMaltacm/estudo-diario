@@ -67,6 +67,18 @@ go run ./cmd/api
 
 O serviço iniciará na porta padrão `8080`. Acesse `http://localhost:8080` pelo navegador.
 
+## Lembretes por e-mail
+
+O link de cada email deve apontar para `https://estudodiario.online/#unsubscribe`. A tela exige login; o descadastro é aplicado por `POST /unsubscribe` autenticado. Para cada envio, o serviço de lembretes deve:
+
+1. Selecionar somente usuários com `email_reminders_enabled = TRUE`.
+2. Incluir o link `https://estudodiario.online/#unsubscribe` no e-mail.
+3. Não enviar lembretes a contas desativadas. O endpoint grava `FALSE` e pode ser chamado repetidamente.
+
+O código deste repositório não contém o job/serviço que dispara os e-mails, então a filtragem e a inclusão do link precisam ser configuradas nele também. Como o descadastro exige autenticação, o destinatário precisará entrar na conta no navegador caso ainda não esteja conectado.
+
+Antes do deploy, aplique o script [`db/migrations/20261028_email_reminders.sql`](db/migrations/20261028_email_reminders.sql). A inicialização também cria essa coluna automaticamente via `EnsureSchema`.
+
 ## Regras de Conduta
 
 Como o código fonte é de conhecimento público, confiamos estritamente na comunidade. O uso da plataforma trata de avaliar a própria capacidade mental para compreender e discorrer sobre um contexto desconhecido em um período espremido de tempo. 

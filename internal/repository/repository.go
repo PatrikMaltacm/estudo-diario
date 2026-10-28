@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"context"
 	"database/sql"
 
 	"github.com/PatrikMaltacm/estudo-diario/internal/model"
@@ -56,4 +57,13 @@ func GetCredentialsByEmail(email string, db *sql.DB) (string, []byte, error) {
 	).Scan(&id, &hash)
 
 	return id, hash, err
+}
+
+// DisableEmailReminders opts an account out of study reminder emails.
+func DisableEmailReminders(ctx context.Context, userID string, db *sql.DB) error {
+	_, err := db.ExecContext(ctx,
+		"UPDATE users SET email_reminders_enabled = FALSE WHERE id = $1",
+		userID,
+	)
+	return err
 }

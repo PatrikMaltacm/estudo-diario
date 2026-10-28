@@ -24,5 +24,10 @@
   "error.evaluate_summary": "Could not evaluate summary. Please try again.",
   "error.save_evaluation": "Could not save your evaluation. Please try again.",
   "error.rate_limit": "Too many requests. Please try again later.",
-  "success.user_created": "User created successfully"
+  "success.user_created": "User created successfully",
+  "unsubscribe.title": "Unsubscribe from email reminders",
+  "unsubscribe.confirm": "Confirm to stop receiving study reminder emails.",
+  "unsubscribe.button": "Stop receiving reminders",
+  "unsubscribe.done": "You are unsubscribed. You will not receive new study reminders.",
+  "unsubscribe.invalid_link": "This unsubscribe link is invalid. Use the latest link you received by email."
 }

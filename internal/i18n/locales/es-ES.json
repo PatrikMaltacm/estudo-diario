@@ -24,5 +24,10 @@
   "error.evaluate_summary": "No se pudo evaluar el resumen. Inténtelo de nuevo.",
   "error.save_evaluation": "No se pudo guardar su evaluación. Inténtelo de nuevo.",
   "error.rate_limit": "Demasiadas solicitudes. Inténtelo de nuevo más tarde.",
-  "success.user_created": "Usuario creado con éxito"
+  "success.user_created": "Usuario creado con éxito",
+  "unsubscribe.title": "Cancelar recordatorios por correo electrónico",
+  "unsubscribe.confirm": "Confirma que quieres dejar de recibir recordatorios de estudio por correo electrónico.",
+  "unsubscribe.button": "Dejar de recibir recordatorios",
+  "unsubscribe.done": "Se canceló la suscripción. No recibirás nuevos recordatorios de estudio.",
+  "unsubscribe.invalid_link": "Este enlace para cancelar la suscripción no es válido. Usa el enlace más reciente que recibiste por correo electrónico."
 }

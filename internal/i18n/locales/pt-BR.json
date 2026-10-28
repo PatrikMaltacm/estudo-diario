@@ -24,5 +24,10 @@
   "error.evaluate_summary": "Não foi possível avaliar o resumo. Tente novamente.",
   "error.save_evaluation": "Não foi possível salvar sua avaliação. Tente novamente.",
   "error.rate_limit": "Muitas requisições. Tente novamente mais tarde.",
-  "success.user_created": "Usuário criado com sucesso"
+  "success.user_created": "Usuário criado com sucesso",
+  "unsubscribe.title": "Cancelar lembretes por e-mail",
+  "unsubscribe.confirm": "Confirme para parar de receber os lembretes de estudo por e-mail.",
+  "unsubscribe.button": "Parar de receber lembretes",
+  "unsubscribe.done": "Descadastro concluído. Você não receberá novos lembretes de estudo.",
+  "unsubscribe.invalid_link": "Este link de descadastro é inválido. Use o link mais recente recebido por e-mail."
 }

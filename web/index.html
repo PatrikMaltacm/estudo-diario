@@ -355,6 +355,7 @@
       <input id="name" placeholder="Nome" data-i18n-placeholder="auth.name_placeholder" autocomplete="name" hidden>
       <input id="email" type="email" placeholder="E-mail" data-i18n-placeholder="auth.email_placeholder" autocomplete="email" required>
       <input id="password" type="password" placeholder="Senha" data-i18n-placeholder="auth.password_placeholder" autocomplete="current-password" required>
+      <p id="authContext" data-i18n="unsubscribe.login_required" hidden>Entre na sua conta para continuar o descadastro dos lembretes.</p>
       <button id="authBtn" data-i18n="auth.btn_login">Entrar</button>
       <p class="error" id="authError"></p>
     </form>
@@ -457,9 +458,19 @@
         <li data-i18n="privacy.li3"><strong>Senha:</strong> salva como hash bcrypt.</li>
         <li data-i18n="privacy.li4"><strong>Resumos:</strong> usados para avaliação e histórico.</li>
       </ul>
-      <p data-i18n="privacy.ai_notice">Seus dados são enviados para a API da OpenAI com <code>store: false</code>, garantindo que não sejam usados para treino.</p>
+      <p data-i18n="privacy.ai_notice">Seu tema e resumo são enviados à API da OpenAI para avaliação. Por padrão, dados da API não são usados para treinar modelos; <code>store: false</code> evita armazenamento do estado da resposta, mas logs de monitoramento podem ser retidos por até 30 dias.</p>
       <p data-i18n="privacy.storage_notice">O token de acesso é salvo apenas no <code>localStorage</code> do seu navegador.</p>
+      <p data-i18n="privacy.reminder_notice">Usamos seu e-mail para enviar lembretes ocasionais para voltar a estudar. Você pode parar esses emails a qualquer momento pelo link de descadastro incluído em cada mensagem.</p>
+      <p data-i18n="privacy.cookies_notice">Este site não usa cookies de publicidade ou análise. O armazenamento local do navegador mantém seu idioma e token de acesso.</p>
     </div>
+  </section>
+
+  <!-- Descadastro de lembretes, disponível apenas para contas autenticadas -->
+  <section id="unsubscribe" hidden>
+    <h2 data-i18n="unsubscribe.title">Cancelar lembretes por e-mail</h2>
+    <p data-i18n="unsubscribe.confirm">Confirme para parar de receber os lembretes de estudo por e-mail.</p>
+    <button id="unsubscribeBtn" type="button" data-i18n="unsubscribe.button">Parar de receber lembretes</button>
+    <p id="unsubscribeResult" role="status" aria-live="polite"></p>
   </section>
 
   <!-- Rodapé -->
@@ -511,6 +522,12 @@
         "auth.btn_register": "Criar conta",
         "auth.toggle_to_register": "Não tem conta? Criar conta",
         "auth.toggle_to_login": "Já tem conta? Entrar",
+        "unsubscribe.login_required": "Entre na sua conta para continuar o descadastro dos lembretes.",
+        "unsubscribe.title": "Cancelar lembretes por e-mail",
+        "unsubscribe.confirm": "Confirme para parar de receber os lembretes de estudo por e-mail.",
+        "unsubscribe.button": "Parar de receber lembretes",
+        "unsubscribe.done": "Descadastro concluído. Você não receberá novos lembretes de estudo.",
+        "unsubscribe.failed": "Não foi possível concluir o descadastro. Tente novamente.",
         "study.header": "Um estudo por dia, 25 minutos.",
         "study.logout": "Sair",
         "study.start_desc": "Ao clicar em começar, sorteamos seu assunto e o relógio de 25 minutos inicia. Estude o tema e envie seu resumo antes do tempo acabar. Só há uma tentativa por dia.",
@@ -547,8 +564,10 @@
         "privacy.li2": "<strong>E-mail:</strong> usado para login (nunca exibido publicamente).",
         "privacy.li3": "<strong>Senha:</strong> salva como hash bcrypt.",
         "privacy.li4": "<strong>Resumos:</strong> usados para avaliação e histórico.",
-        "privacy.ai_notice": "Seus dados são enviados para a API da OpenAI com <code>store: false</code>, garantindo que não sejam usados para treino.",
+        "privacy.ai_notice": "Seu tema e resumo são enviados à API da OpenAI para avaliação. Por padrão, dados da API não são usados para treinar modelos; <code>store: false</code> evita armazenamento do estado da resposta, mas logs de monitoramento podem ser retidos por até 30 dias.",
         "privacy.storage_notice": "O token de acesso é salvo apenas no <code>localStorage</code> do seu navegador.",
+        "privacy.reminder_notice": "Usamos seu e-mail para enviar lembretes ocasionais para voltar a estudar. Você pode parar esses emails a qualquer momento pelo link de descadastro incluído em cada mensagem.",
+        "privacy.cookies_notice": "Este site não usa cookies de publicidade ou análise. O armazenamento local do navegador mantém seu idioma e token de acesso.",
         "footer.open_source": "Projeto Open Source e Gratuito",
         "footer.trust": "Confiamos na comunidade — trapacear é se enganar, não nos enganar. O uso de IA para gerar conteúdo é contra as regras do jogo.",
         "levels": {
@@ -577,6 +596,12 @@
         "auth.btn_register": "Create account",
         "auth.toggle_to_register": "Don't have an account? Sign up",
         "auth.toggle_to_login": "Already have an account? Sign In",
+        "unsubscribe.login_required": "Sign in to continue unsubscribing from reminders.",
+        "unsubscribe.title": "Unsubscribe from email reminders",
+        "unsubscribe.confirm": "Confirm to stop receiving study reminder emails.",
+        "unsubscribe.button": "Stop receiving reminders",
+        "unsubscribe.done": "You are unsubscribed. You will not receive new study reminders.",
+        "unsubscribe.failed": "Could not complete your unsubscribe request. Please try again.",
         "study.header": "One study session a day, 25 minutes.",
         "study.logout": "Log out",
         "study.start_desc": "When you click start, we draw your topic and the 25-minute countdown begins. Study the subject and submit your summary before time runs out. Only one attempt per day.",
@@ -613,8 +638,10 @@
         "privacy.li2": "<strong>Email:</strong> used for authentication (never publicly displayed).",
         "privacy.li3": "<strong>Password:</strong> stored as a secure bcrypt hash.",
         "privacy.li4": "<strong>Summaries:</strong> stored for AI grading and study history.",
-        "privacy.ai_notice": "Your submissions are sent to the OpenAI API with <code>store: false</code>, ensuring they are not used for AI training.",
+        "privacy.ai_notice": "Your topic and summary are sent to the OpenAI API for evaluation. API data is not used to train models by default; <code>store: false</code> prevents response state storage, but monitoring logs may be retained for up to 30 days.",
         "privacy.storage_notice": "Your access token is kept solely in your browser's <code>localStorage</code>.",
+        "privacy.reminder_notice": "We use your email to send occasional reminders to return to studying. You can stop these emails at any time using the unsubscribe link in each message.",
+        "privacy.cookies_notice": "This site does not use advertising or analytics cookies. Browser local storage keeps your language and access token.",
         "footer.open_source": "Free & Open Source Project",
         "footer.trust": "We trust the community — cheating is deceiving yourself, not us. Generating content with AI violates the rules of the game.",
         "levels": {
@@ -643,6 +670,12 @@
         "auth.btn_register": "Crear cuenta",
         "auth.toggle_to_register": "¿No tienes cuenta? Crear cuenta",
         "auth.toggle_to_login": "¿Ya tienes cuenta? Iniciar sesión",
+        "unsubscribe.login_required": "Inicia sesión para continuar con la cancelación de los recordatorios.",
+        "unsubscribe.title": "Cancelar recordatorios por correo electrónico",
+        "unsubscribe.confirm": "Confirma que quieres dejar de recibir recordatorios de estudio por correo electrónico.",
+        "unsubscribe.button": "Dejar de recibir recordatorios",
+        "unsubscribe.done": "Se canceló la suscripción. No recibirás nuevos recordatorios de estudio.",
+        "unsubscribe.failed": "No se pudo completar la cancelación. Inténtalo de nuevo.",
         "study.header": "Un estudio por día, 25 minutos.",
         "study.logout": "Cerrar sesión",
         "study.start_desc": "Al hacer clic en comenzar, sorteamos tu tema y el reloj de 25 minutos empieza a correr. Estudia el tema y envía tu resumen antes de que termine el tiempo. Solo un intento por día.",
@@ -679,8 +712,10 @@
         "privacy.li2": "<strong>Correo electrónico:</strong> usado para iniciar sesión (nunca público).",
         "privacy.li3": "<strong>Contraseña:</strong> guardada como hash bcrypt.",
         "privacy.li4": "<strong>Resúmenes:</strong> usados para evaluación e historial.",
-        "privacy.ai_notice": "Tus datos se envían a la API de OpenAI con <code>store: false</code>, garantizando que no se usen para entrenamiento.",
+        "privacy.ai_notice": "Tu tema y resumen se envían a la API de OpenAI para su evaluación. Por defecto, los datos de la API no se usan para entrenar modelos; <code>store: false</code> evita guardar el estado de la respuesta, pero los registros de supervisión pueden conservarse hasta 30 días.",
         "privacy.storage_notice": "El token de acceso se guarda únicamente en el <code>localStorage</code> de tu navegador.",
+        "privacy.reminder_notice": "Usamos tu correo electrónico para enviarte recordatorios ocasionales para volver a estudiar. Puedes dejar de recibirlos cuando quieras mediante el enlace para cancelar la suscripción incluido en cada mensaje.",
+        "privacy.cookies_notice": "Este sitio no usa cookies publicitarias ni de analítica. El almacenamiento local del navegador conserva tu idioma y token de acceso.",
         "footer.open_source": "Proyecto Open Source y Gratuito",
         "footer.trust": "Confiamos en la comunidad: hacer trampa es engañarse a uno mismo, no a nosotros. El uso de IA para generar contenido va contra las reglas del juego.",
         "levels": {
@@ -821,7 +856,7 @@
       $("intro").hidden = logged;
       
       const hash = (window.location.hash || "").replace("#", "");
-      if (["ranking", "rules", "privacy"].includes(hash)) {
+      if (["ranking", "rules", "privacy", "unsubscribe"].includes(hash)) {
         navigate(hash);
       } else if (logged) {
         navigate('study');
@@ -840,22 +875,26 @@
 
     // ---------- Navegação ----------
     function hideAllPages() {
-      ["study", "ranking", "rules", "privacy", "auth"].forEach(id => {
+      ["study", "ranking", "rules", "privacy", "unsubscribe", "auth"].forEach(id => {
         if ($(id)) $(id).hidden = true;
       });
     }
 
     function navigate(page) {
       const logged = !!localStorage.getItem("token");
-      if (page === 'study' && !logged) {
+      if ((page === 'study' || page === 'unsubscribe') && !logged) {
         hideAllPages();
         $("auth").hidden = false;
-        history.replaceState(null, "", window.location.pathname + window.location.search);
+        $("authContext").hidden = page !== 'unsubscribe';
+        $("toggleMode").hidden = page === 'unsubscribe';
+        if (page === 'study') history.replaceState(null, "", window.location.pathname + window.location.search);
         return;
       }
 
       hideAllPages();
       $(page).hidden = false;
+      $("authContext").hidden = true;
+      $("toggleMode").hidden = false;
       if (page === 'study') loadStudy();
       if (page === 'ranking') loadRanking();
       
@@ -993,6 +1032,21 @@
     };
 
     $("logout").onclick = () => logout();
+
+    $("unsubscribeBtn").onclick = async () => {
+      const button = $("unsubscribeBtn");
+      const result = $("unsubscribeResult");
+      button.disabled = true;
+      result.textContent = "";
+      try {
+        await api("POST", "/unsubscribe", {}, true);
+        result.textContent = t("unsubscribe.done");
+        button.hidden = true;
+      } catch (err) {
+        result.textContent = err.message || t("unsubscribe.failed");
+        button.disabled = false;
+      }
+    };
 
     // ---------- Login / cadastro ----------
     $("toggleMode").onclick = () => {

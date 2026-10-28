@@ -31,6 +31,7 @@ func EnsureSchema(ctx context.Context, db *sql.DB) error {
 			UNIQUE(user_id, study_date)
 		);`,
 		`ALTER TABLE users ADD COLUMN IF NOT EXISTS preferred_language VARCHAR(10) NOT NULL DEFAULT 'pt-BR';`,
+		`ALTER TABLE users ADD COLUMN IF NOT EXISTS email_reminders_enabled BOOLEAN NOT NULL DEFAULT TRUE;`,
 		`ALTER TABLE study_sessions ADD COLUMN IF NOT EXISTS language VARCHAR(10) NOT NULL DEFAULT 'pt-BR';`,
 	}
 

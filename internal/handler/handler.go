@@ -29,6 +29,21 @@ type Application struct {
 	StaticFS fs.FS
 }
 
+// UnsubscribeHandler disables reminders for the authenticated account.
+func (app *Application) UnsubscribeHandler(w http.ResponseWriter, r *http.Request) {
+	userID, ok := auth.UserIDFromContext(r.Context())
+	if !ok {
+		http.Error(w, i18n.T(r.Context(), "error.unauthorized"), http.StatusUnauthorized)
+		return
+	}
+	if err := repository.DisableEmailReminders(r.Context(), userID, app.DB); err != nil {
+		log.Printf("Erro ao desativar lembretes por e-mail: %v", err)
+		writeJSON(w, http.StatusInternalServerError, map[string]string{"error": i18n.T(r.Context(), "error.internal")})
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]string{"message": i18n.T(r.Context(), "unsubscribe.done")})
+}
+
 // writeJSON escreve uma resposta JSON com o status HTTP fornecido.
 func writeJSON(w http.ResponseWriter, status int, v any) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
