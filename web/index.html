@@ -234,6 +234,7 @@
 
     .nav {
       display: flex;
+      flex-wrap: wrap;
       gap: 16px;
       margin-bottom: 24px;
       font-size: 0.9rem;
@@ -277,6 +278,26 @@
     .error {
       color: #d33;
       min-height: 1.4em;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .checkbox-row input {
+      width: auto;
+      margin-top: 4px;
+      padding: 0;
+    }
+
+    .danger-btn {
+      border-color: #d33;
+      color: #d33;
+      background: transparent;
     }
 
     .box {
@@ -347,6 +368,7 @@
     <button class="link" onclick="navigate('ranking')" data-i18n="nav.ranking">Ranking</button>
     <button class="link" onclick="navigate('rules')" data-i18n="nav.rules">Regras</button>
     <button class="link" onclick="navigate('privacy')" data-i18n="nav.privacy">Privacidade</button>
+    <button class="link" onclick="navigate('delete-account')" data-i18n="nav.delete_account">Excluir conta</button>
   </nav>
 
   <!-- Login / cadastro -->
@@ -462,6 +484,7 @@
       <p data-i18n="privacy.storage_notice">O token de acesso é salvo apenas no <code>localStorage</code> do seu navegador.</p>
       <p data-i18n="privacy.reminder_notice">Usamos seu e-mail para enviar lembretes ocasionais para voltar a estudar. Você pode parar esses emails a qualquer momento pelo link de descadastro incluído em cada mensagem.</p>
       <p data-i18n="privacy.cookies_notice">Este site não usa cookies de publicidade ou análise. O armazenamento local do navegador mantém seu idioma e token de acesso.</p>
+      <p><button class="link" type="button" onclick="navigate('delete-account')" data-i18n="privacy.delete_link">Excluir minha conta e meus dados</button></p>
     </div>
   </section>
 
@@ -471,6 +494,27 @@
     <p data-i18n="unsubscribe.confirm">Confirme para parar de receber os lembretes de estudo por e-mail.</p>
     <button id="unsubscribeBtn" type="button" data-i18n="unsubscribe.button">Parar de receber lembretes</button>
     <p id="unsubscribeResult" role="status" aria-live="polite"></p>
+  </section>
+
+  <!-- Exclusão permanente da conta autenticada -->
+  <section id="delete-account" hidden>
+    <h2 data-i18n="delete.title">Excluir conta</h2>
+    <div class="box" id="deleteBox">
+      <p data-i18n="delete.warning">Esta ação remove permanentemente sua conta, seus pontos no ranking e todo o seu histórico de resumos. Não é possível desfazer.</p>
+      <form id="deleteForm">
+        <input id="deletePassword" type="password" placeholder="Sua senha atual" data-i18n-placeholder="delete.password_placeholder" autocomplete="current-password" required>
+        <label class="checkbox-row">
+          <input id="deleteConfirmCheck" type="checkbox" required>
+          <span data-i18n="delete.confirm_check">Entendo que meus dados e pontos serão apagados permanentemente.</span>
+        </label>
+        <button id="deleteBtn" class="danger-btn" data-i18n="delete.button">Excluir minha conta</button>
+        <p class="error" id="deleteError"></p>
+      </form>
+    </div>
+    <div class="box" id="deleteDone" hidden>
+      <p data-i18n="delete.done" role="status" aria-live="polite">Sua conta e todos os seus dados foram excluídos permanentemente.</p>
+      <button id="deleteHomeBtn" type="button" data-i18n="delete.back_home">Voltar ao início</button>
+    </div>
   </section>
 
   <!-- Rodapé -->
@@ -514,6 +558,7 @@
         "nav.ranking": "Ranking",
         "nav.rules": "Regras",
         "nav.privacy": "Privacidade",
+        "nav.delete_account": "Excluir conta",
         "nav.home": "Início",
         "auth.name_placeholder": "Nome",
         "auth.email_placeholder": "E-mail",
@@ -568,6 +613,17 @@
         "privacy.storage_notice": "O token de acesso é salvo apenas no <code>localStorage</code> do seu navegador.",
         "privacy.reminder_notice": "Usamos seu e-mail para enviar lembretes ocasionais para voltar a estudar. Você pode parar esses emails a qualquer momento pelo link de descadastro incluído em cada mensagem.",
         "privacy.cookies_notice": "Este site não usa cookies de publicidade ou análise. O armazenamento local do navegador mantém seu idioma e token de acesso.",
+        "privacy.delete_link": "Excluir minha conta e meus dados",
+        "delete.login_required": "Entre na sua conta para confirmar a exclusão da conta.",
+        "delete.title": "Excluir conta",
+        "delete.warning": "Esta ação remove permanentemente sua conta, seus pontos no ranking e todo o seu histórico de resumos. Não é possível desfazer.",
+        "delete.password_placeholder": "Sua senha atual",
+        "delete.confirm_check": "Entendo que meus dados e pontos serão apagados permanentemente.",
+        "delete.button": "Excluir minha conta",
+        "delete.deleting_btn": "Excluindo...",
+        "delete.done": "Sua conta e todos os seus dados foram excluídos permanentemente.",
+        "delete.back_home": "Voltar ao início",
+        "delete.confirm_required": "Marque a confirmação antes de excluir sua conta.",
         "footer.open_source": "Projeto Open Source e Gratuito",
         "footer.trust": "Confiamos na comunidade — trapacear é se enganar, não nos enganar. O uso de IA para gerar conteúdo é contra as regras do jogo.",
         "levels": {
@@ -588,6 +644,7 @@
         "nav.ranking": "Leaderboard",
         "nav.rules": "Rules",
         "nav.privacy": "Privacy",
+        "nav.delete_account": "Delete account",
         "nav.home": "Home",
         "auth.name_placeholder": "Name",
         "auth.email_placeholder": "Email",
@@ -642,6 +699,17 @@
         "privacy.storage_notice": "Your access token is kept solely in your browser's <code>localStorage</code>.",
         "privacy.reminder_notice": "We use your email to send occasional reminders to return to studying. You can stop these emails at any time using the unsubscribe link in each message.",
         "privacy.cookies_notice": "This site does not use advertising or analytics cookies. Browser local storage keeps your language and access token.",
+        "privacy.delete_link": "Delete my account and data",
+        "delete.login_required": "Sign in to confirm deleting your account.",
+        "delete.title": "Delete account",
+        "delete.warning": "This action permanently deletes your account, leaderboard points, and all study summary history. It cannot be undone.",
+        "delete.password_placeholder": "Your current password",
+        "delete.confirm_check": "I understand my data and points will be permanently deleted.",
+        "delete.button": "Delete my account",
+        "delete.deleting_btn": "Deleting...",
+        "delete.done": "Your account and all associated data have been permanently deleted.",
+        "delete.back_home": "Back to home",
+        "delete.confirm_required": "Please check the confirmation box before deleting your account.",
         "footer.open_source": "Free & Open Source Project",
         "footer.trust": "We trust the community — cheating is deceiving yourself, not us. Generating content with AI violates the rules of the game.",
         "levels": {
@@ -662,6 +730,7 @@
         "nav.ranking": "Clasificación",
         "nav.rules": "Reglas",
         "nav.privacy": "Privacidad",
+        "nav.delete_account": "Eliminar cuenta",
         "nav.home": "Inicio",
         "auth.name_placeholder": "Nombre",
         "auth.email_placeholder": "Correo electrónico",
@@ -716,6 +785,17 @@
         "privacy.storage_notice": "El token de acceso se guarda únicamente en el <code>localStorage</code> de tu navegador.",
         "privacy.reminder_notice": "Usamos tu correo electrónico para enviarte recordatorios ocasionales para volver a estudiar. Puedes dejar de recibirlos cuando quieras mediante el enlace para cancelar la suscripción incluido en cada mensaje.",
         "privacy.cookies_notice": "Este sitio no usa cookies publicitarias ni de analítica. El almacenamiento local del navegador conserva tu idioma y token de acceso.",
+        "privacy.delete_link": "Eliminar mi cuenta y datos",
+        "delete.login_required": "Inicia sesión para confirmar la eliminación de tu cuenta.",
+        "delete.title": "Eliminar cuenta",
+        "delete.warning": "Esta acción elimina permanentemente tu cuenta, tus puntos en la clasificación y todo tu historial de resúmenes. No se puede deshacer.",
+        "delete.password_placeholder": "Tu contraseña actual",
+        "delete.confirm_check": "Entiendo que mis datos y puntos se eliminarán permanentemente.",
+        "delete.button": "Eliminar mi cuenta",
+        "delete.deleting_btn": "Eliminando...",
+        "delete.done": "Tu cuenta y todos tus datos han sido eliminados permanentemente.",
+        "delete.back_home": "Volver al inicio",
+        "delete.confirm_required": "Marca la casilla de confirmación antes de eliminar tu cuenta.",
         "footer.open_source": "Proyecto Open Source y Gratuito",
         "footer.trust": "Confiamos en la comunidad: hacer trampa es engañarse a uno mismo, no a nosotros. El uso de IA para generar contenido va contra las reglas del juego.",
         "levels": {
@@ -762,7 +842,13 @@
     let registerMode = false;
     let timerId = null;
     let sending = false;
+    let deleting = false;
     let rankingLoaded = false;
+
+    const AUTH_CONTEXT_KEYS = {
+      "unsubscribe": "unsubscribe.login_required",
+      "delete-account": "delete.login_required"
+    };
 
     function t(key) {
       const dict = TRANSLATIONS[currentLang] || TRANSLATIONS["pt-BR"];
@@ -821,6 +907,9 @@
       if (!sending) {
         $("sendBtn").textContent = t("study.send_btn");
       }
+      if (!deleting) {
+        $("deleteBtn").textContent = t("delete.button");
+      }
     }
 
     // ---------- API ----------
@@ -856,7 +945,7 @@
       $("intro").hidden = logged;
       
       const hash = (window.location.hash || "").replace("#", "");
-      if (["ranking", "rules", "privacy", "unsubscribe"].includes(hash)) {
+      if (["ranking", "rules", "privacy", "unsubscribe", "delete-account"].includes(hash)) {
         navigate(hash);
       } else if (logged) {
         navigate('study');
@@ -869,24 +958,34 @@
     function logout(msg = "") {
       localStorage.removeItem("token");
       clearInterval(timerId);
+      $("deletePassword").value = "";
       $("authError").textContent = msg;
       render();
     }
 
     // ---------- Navegação ----------
     function hideAllPages() {
-      ["study", "ranking", "rules", "privacy", "unsubscribe", "auth"].forEach(id => {
+      ["study", "ranking", "rules", "privacy", "unsubscribe", "delete-account", "auth"].forEach(id => {
         if ($(id)) $(id).hidden = true;
       });
     }
 
     function navigate(page) {
       const logged = !!localStorage.getItem("token");
-      if ((page === 'study' || page === 'unsubscribe') && !logged) {
+      if ((page === 'study' || AUTH_CONTEXT_KEYS[page]) && !logged) {
+        const contextKey = AUTH_CONTEXT_KEYS[page];
         hideAllPages();
         $("auth").hidden = false;
-        $("authContext").hidden = page !== 'unsubscribe';
-        $("toggleMode").hidden = page === 'unsubscribe';
+        if (contextKey) {
+          registerMode = false;
+          $("name").hidden = true;
+          $("name").required = false;
+          $("authBtn").textContent = t("auth.btn_login");
+          $("authContext").setAttribute("data-i18n", contextKey);
+          $("authContext").textContent = t(contextKey);
+        }
+        $("authContext").hidden = !contextKey;
+        $("toggleMode").hidden = !!contextKey;
         if (page === 'study') history.replaceState(null, "", window.location.pathname + window.location.search);
         return;
       }
@@ -897,6 +996,13 @@
       $("toggleMode").hidden = false;
       if (page === 'study') loadStudy();
       if (page === 'ranking') loadRanking();
+      if (page === 'delete-account') {
+        $("deleteBox").hidden = false;
+        $("deleteDone").hidden = true;
+        $("deletePassword").value = "";
+        $("deleteConfirmCheck").checked = false;
+        $("deleteError").textContent = "";
+      }
       
       const hash = (page === 'study') ? "" : "#" + page;
       history.replaceState(null, "", window.location.pathname + window.location.search + hash);
@@ -1047,6 +1153,41 @@
         button.disabled = false;
       }
     };
+
+    // ---------- Excluir conta ----------
+    $("deleteForm").onsubmit = async (e) => {
+      e.preventDefault();
+      $("deleteError").textContent = "";
+
+      if (!$("deleteConfirmCheck").checked) {
+        $("deleteError").textContent = t("delete.confirm_required");
+        return;
+      }
+
+      deleting = true;
+      $("deleteBtn").disabled = true;
+      $("deleteBtn").textContent = t("delete.deleting_btn");
+
+      try {
+        await api("POST", "/user/delete", { password: $("deletePassword").value }, true);
+        localStorage.removeItem("token");
+        clearInterval(timerId);
+        rankingLoaded = false;
+        $("nav").hidden = true;
+        $("deletePassword").value = "";
+        $("deleteBox").hidden = true;
+        $("deleteDone").hidden = false;
+        history.replaceState(null, "", window.location.pathname + window.location.search);
+      } catch (err) {
+        $("deleteError").textContent = err.message;
+      } finally {
+        deleting = false;
+        $("deleteBtn").disabled = false;
+        $("deleteBtn").textContent = t("delete.button");
+      }
+    };
+
+    $("deleteHomeBtn").onclick = () => render();
 
     // ---------- Login / cadastro ----------
     $("toggleMode").onclick = () => {

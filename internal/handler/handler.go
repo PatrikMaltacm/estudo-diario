@@ -51,6 +51,63 @@ func writeJSON(w http.ResponseWriter, status int, v any) {
 	json.NewEncoder(w).Encode(v)
 }
 
+// DeleteUserHandler exclui permanentemente a conta e o histórico do usuário autenticado.
+// O userID é extraído exclusivamente do JWT validado e exige reconfirmação da senha atual.
+func (app *Application) DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
+	userID, ok := auth.UserIDFromContext(r.Context())
+	if !ok {
+		http.Error(w, i18n.T(r.Context(), "error.unauthorized"), http.StatusUnauthorized)
+		return
+	}
+
+	r.Body = http.MaxBytesReader(w, r.Body, 1<<20)
+
+	var req struct {
+		Password string `json:"password"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, i18n.T(r.Context(), "error.invalid_data"), http.StatusBadRequest)
+		return
+	}
+
+	if req.Password == "" {
+		http.Error(w, i18n.T(r.Context(), "error.password_required"), http.StatusBadRequest)
+		return
+	}
+
+	hash, err := repository.GetPasswordHashByID(r.Context(), userID, app.DB)
+	if errors.Is(err, sql.ErrNoRows) {
+		bcrypt.CompareHashAndPassword(auth.DummyHash, []byte(req.Password))
+		http.Error(w, i18n.T(r.Context(), "error.token_invalid"), http.StatusUnauthorized)
+		return
+	}
+	if err != nil {
+		log.Printf("Erro ao buscar usuário para exclusão: %v", err)
+		http.Error(w, i18n.T(r.Context(), "error.internal"), http.StatusInternalServerError)
+		return
+	}
+
+	if len(req.Password) > 72 || bcrypt.CompareHashAndPassword(hash, []byte(req.Password)) != nil {
+		http.Error(w, i18n.T(r.Context(), "error.invalid_password"), http.StatusForbidden)
+		return
+	}
+
+	if err := repository.DeleteUser(r.Context(), userID, app.DB); err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			http.Error(w, i18n.T(r.Context(), "error.token_invalid"), http.StatusUnauthorized)
+			return
+		}
+		log.Printf("Erro ao excluir conta: %v", err)
+		http.Error(w, i18n.T(r.Context(), "error.internal"), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Cache-Control", "no-store")
+	writeJSON(w, http.StatusOK, map[string]string{
+		"message": i18n.T(r.Context(), "success.user_deleted"),
+	})
+}
+
 // isValidEmail valida o formato do e-mail usando net/mail da stdlib.
 func isValidEmail(email string) bool {
 	_, err := mail.ParseAddress(email)

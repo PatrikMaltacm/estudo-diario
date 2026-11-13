@@ -67,3 +67,47 @@ func DisableEmailReminders(ctx context.Context, userID string, db *sql.DB) error
 	)
 	return err
 }
+
+// GetPasswordHashByID retorna o hash bcrypt da senha do usuário autenticado.
+func GetPasswordHashByID(ctx context.Context, userID string, db *sql.DB) ([]byte, error) {
+	var hash []byte
+	err := db.QueryRowContext(ctx,
+		"SELECT password FROM users WHERE id = $1",
+		userID,
+	).Scan(&hash)
+	return hash, err
+}
+
+// DeleteUser remove atomicamente as sessões de estudo e a conta do usuário autenticado.
+func DeleteUser(ctx context.Context, userID string, db *sql.DB) error {
+	tx, err := db.BeginTx(ctx, nil)
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if _, err := tx.ExecContext(ctx,
+		"DELETE FROM study_sessions WHERE user_id = $1",
+		userID,
+	); err != nil {
+		return err
+	}
+
+	res, err := tx.ExecContext(ctx,
+		"DELETE FROM users WHERE id = $1",
+		userID,
+	)
+	if err != nil {
+		return err
+	}
+
+	rows, err := res.RowsAffected()
+	if err != nil {
+		return err
+	}
+	if rows == 0 {
+		return sql.ErrNoRows
+	}
+
+	return tx.Commit()
+}

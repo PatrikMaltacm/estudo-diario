@@ -156,11 +156,16 @@ func main() {
 
 	mux.HandleFunc("GET /{$}", app.HomeHandler)
 	mux.Handle("POST /user", severeLimiter(http.HandlerFunc(app.CreateUserHandler)))
+	mux.Handle("DELETE /user", severeLimiter(auth.RequireAuth(app.JWTSecret, app.DeleteUserHandler)))
+	mux.Handle("POST /user/delete", severeLimiter(auth.RequireAuth(app.JWTSecret, app.DeleteUserHandler)))
 	mux.Handle("POST /login", severeLimiter(http.HandlerFunc(app.LoginHandler)))
 	mux.HandleFunc("GET /unsubscribe", func(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/#unsubscribe", http.StatusSeeOther)
 	})
 	mux.Handle("POST /unsubscribe", severeLimiter(auth.RequireAuth(app.JWTSecret, app.UnsubscribeHandler)))
+	mux.HandleFunc("GET /delete-account", func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "/#delete-account", http.StatusSeeOther)
+	})
 	mux.HandleFunc("GET /ranking", app.RankingHandler)
 	mux.HandleFunc("GET /study/today", auth.RequireAuth(app.JWTSecret, app.TodayStudyHandler))
 	mux.Handle("POST /study/start", severeLimiter(auth.RequireAuth(app.JWTSecret, app.StartStudyHandler)))
